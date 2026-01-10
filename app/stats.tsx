@@ -266,9 +266,9 @@ export default function StatsScreen() {
                         {index < dataPoints.length - 1 && (() => {
                           const nextHeight = (dataPoints[index + 1].value / normalizedMax) * (height - 40);
                           const heightDiff = nextHeight - barHeight;
-                          const distance = barWidth + 16;
-                          const angle = Math.atan2(heightDiff, distance) * (180 / Math.PI);
-                          const lineLength = Math.sqrt(distance * distance + heightDiff * heightDiff);
+                          const horizontalDistance = (graphWidth - 40) / dataPoints.length;
+                          const angle = Math.atan2(heightDiff, horizontalDistance) * (180 / Math.PI);
+                          const lineLength = Math.sqrt(horizontalDistance * horizontalDistance + heightDiff * heightDiff);
 
                           return (
                             <View
@@ -276,10 +276,10 @@ export default function StatsScreen() {
                                 styles.lineConnector,
                                 {
                                   bottom: Math.max(barHeight, 2) + 3,
+                                  left: 3,
                                   width: lineLength,
                                   backgroundColor: isOverLimit ? '#ff4757' : accentColor,
                                   transform: [{ rotate: `${angle}deg` }],
-                                  transformOrigin: 'left center',
                                 },
                               ]}
                             />
@@ -774,8 +774,9 @@ const styles = StyleSheet.create({
   lineConnector: {
     position: 'absolute',
     height: 1.5,
-    left: '50%',
+    left: 3,
     borderRadius: 1,
+    transformOrigin: '0% 50%',
   },
   limitLine: {
     position: 'absolute',
