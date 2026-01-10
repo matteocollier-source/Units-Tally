@@ -75,6 +75,37 @@ export default function StatsScreen() {
     return Array.from(years).sort((a, b) => b - a);
   }, [data]);
 
+  const getDominantDrinkIcon = (dateStr: string): string | null => {
+    const dayData = data[dateStr];
+    if (!dayData || !dayData.drinkCounts) return null;
+    
+    const drinkCounts = dayData.drinkCounts;
+    const drinkIds = Object.keys(drinkCounts).filter(id => drinkCounts[id] > 0);
+    
+    if (drinkIds.length < 2) return null;
+    
+    let maxUnits = 0;
+    let dominantDrinkId: string | null = null;
+    
+    drinkIds.forEach(drinkId => {
+      const count = drinkCounts[drinkId] || 0;
+      const template = settings.drinkTemplates.find(t => t.id === drinkId);
+      const units = template ? count * template.units : 0;
+      
+      if (units > maxUnits) {
+        maxUnits = units;
+        dominantDrinkId = drinkId;
+      }
+    });
+    
+    if (dominantDrinkId) {
+      const template = settings.drinkTemplates.find(t => t.id === dominantDrinkId);
+      return template?.emoji || null;
+    }
+    
+    return null;
+  };
+
   const getCalendarData = () => {
     const today = new Date();
     const targetMonth = new Date(today.getFullYear(), today.getMonth() - selectedMonthOffset, 1);
@@ -84,10 +115,10 @@ export default function StatsScreen() {
     const firstDayOfWeek = new Date(year, month, 1).getDay();
     const adjustedFirstDay = firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1;
     
-    const days: { date: string; day: number; drank: boolean | null; isFuture: boolean }[] = [];
+    const days: { date: string; day: number; drank: boolean | null; isFuture: boolean; dominantDrinkIcon: string | null }[] = [];
     
     for (let i = 0; i < adjustedFirstDay; i++) {
-      days.push({ date: '', day: 0, drank: null, isFuture: false });
+      days.push({ date: '', day: 0, drank: null, isFuture: false, dominantDrinkIcon: null });
     }
     
     const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
@@ -102,6 +133,7 @@ export default function StatsScreen() {
         day,
         drank: storedData ? storedData.drank : (dayData ? dayData.drank : null),
         isFuture,
+        dominantDrinkIcon: getDominantDrinkIcon(dateStr),
       });
     }
     
@@ -329,10 +361,20 @@ export default function StatsScreen() {
                 <>
                   <Text style={styles.calendarDayNumber}>{dayData.day}</Text>
                   {!dayData.isFuture && dayData.drank === true ? (
-                    <View style={styles.calendarX}>
-                      <View style={styles.calendarXLine1} />
-                      <View style={styles.calendarXLine2} />
-                    </View>
+                    dayData.dominantDrinkIcon ? (
+                      <View style={styles.calendarDrinkIcon}>
+                        <Image 
+                          source={{ uri: dayData.dominantDrinkIcon }} 
+                          style={styles.calendarDrinkIconImage}
+                          resizeMode="contain"
+                        />
+                      </View>
+                    ) : (
+                      <View style={styles.calendarX}>
+                        <View style={styles.calendarXLine1} />
+                        <View style={styles.calendarXLine2} />
+                      </View>
+                    )
                   ) : !dayData.isFuture && dayData.drank === false ? (
                     <View style={styles.calendarStar}>
                       <Image 
@@ -562,6 +604,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   calendarStarImage: {
+    width: 20,
+    height: 20,
+  },
+  calendarDrinkIcon: {
+    width: 20,
+    height: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  calendarDrinkIconImage: {
     width: 20,
     height: 20,
   },
