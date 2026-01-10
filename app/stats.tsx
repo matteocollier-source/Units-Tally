@@ -192,7 +192,8 @@ export default function StatsScreen() {
     subtitle: string,
     accentColor: string,
     glowColor: string,
-    weeklyLimit?: number
+    weeklyLimit?: number,
+    showValuesInBars?: boolean
   ) => {
     const barWidth = Math.max((graphWidth - 40) / dataPoints.length - 12, 20);
     const normalizedMax = Math.ceil(maxValue / 5) * 5 || 5;
@@ -246,6 +247,9 @@ export default function StatsScreen() {
                         ]}
                       >
                         <View style={[styles.barGlow, { backgroundColor: isOverLimit ? '#ff4757' : glowColor }]} />
+                        {showValuesInBars && point.value > 0 && barHeight > 20 && (
+                          <Text style={styles.barValueText}>{point.value}</Text>
+                        )}
                       </View>
                     ) : (
                       <View style={styles.linePointContainer}>
@@ -356,7 +360,8 @@ export default function StatsScreen() {
           `Avg: ${weeklyAvg.toFixed(1)} units/day`,
           '#00d4aa',
           '#00ffcc',
-          14
+          14,
+          true
         )}
         
         {renderNeonGraph(
@@ -367,7 +372,8 @@ export default function StatsScreen() {
           `Avg: ${monthlyAvg.toFixed(1)} units/week`,
           '#00b4d8',
           '#00e5ff',
-          14
+          14,
+          true
         )}
         
         <View style={styles.yearGraphWrapper}>
@@ -778,5 +784,13 @@ const styles = StyleSheet.create({
     height: 2,
     backgroundColor: 'rgba(255, 71, 87, 0.18)',
     borderRadius: 2,
+  },
+  barValueText: {
+    position: 'absolute',
+    top: 4,
+    alignSelf: 'center',
+    fontSize: 10,
+    fontWeight: '700' as const,
+    color: '#0a0a0a',
   },
 });
