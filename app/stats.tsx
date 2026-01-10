@@ -275,7 +275,7 @@ export default function StatsScreen() {
                               style={[
                                 styles.lineConnector,
                                 {
-                                  bottom: Math.max(barHeight, 2) + 6,
+                                  bottom: Math.max(barHeight, 2) + 3,
                                   width: lineLength,
                                   backgroundColor: isOverLimit ? '#ff4757' : accentColor,
                                   transform: [{ rotate: `${angle}deg` }],
@@ -763,17 +763,17 @@ const styles = StyleSheet.create({
   },
   linePoint: {
     position: 'absolute',
-    width: 12,
-    height: 12,
-    borderRadius: 6,
+    width: 6,
+    height: 6,
+    borderRadius: 3,
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.8,
-    shadowRadius: 6,
-    elevation: 6,
+    shadowRadius: 4,
+    elevation: 4,
   },
   lineConnector: {
     position: 'absolute',
-    height: 2,
+    height: 1.5,
     left: '50%',
     borderRadius: 1,
   },
