@@ -413,7 +413,7 @@ export default function DrinkTrackerScreen() {
           <View style={styles.statsRow}>
             <TouchableOpacity style={styles.statCircleLarge} onPress={handleStatPress}>
               <Text style={styles.statValueLarge}>{(Math.ceil(statistics.avgDrinkingDaysPerWeek * 10) / 10).toFixed(1)}</Text>
-              <Text style={styles.statLabelLarge}>Average Drink{'\n'}Days / Week</Text>
+              <Text style={styles.statLabelLarge}>Average Drink{'\n'}Days a Week</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.statCircleLarge} onPress={handleStatPress}>
               <Text style={styles.statValueLarge}>{(Math.ceil(statistics.avgUnitsPerWeek * 10) / 10).toFixed(1)}</Text>
@@ -1073,7 +1073,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 4,
-    borderColor: '#6ba5a7',
+    borderColor: '#3d8b8d',
   },
   statValueSmall: {
     fontSize: 26,
@@ -1085,7 +1085,7 @@ const styles = StyleSheet.create({
   statValueLarge: {
     fontSize: 30,
     fontWeight: '900' as const,
-    color: '#6ba5a7',
+    color: '#3d8b8d',
     marginBottom: 4,
     fontFamily: 'monospace',
   },
@@ -1140,7 +1140,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#e8e8e8',
     padding: 10,
-    minHeight: 88,
+    minHeight: 78,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.08,
