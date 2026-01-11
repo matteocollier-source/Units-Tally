@@ -8,20 +8,21 @@ import {
   Linking,
   Modal,
   Pressable,
-  Switch,
   TextInput,
   Image,
 } from 'react-native';
 import { useSettings } from '@/contexts/SettingsContext';
-import * as Haptics from 'expo-haptics';
+import { LinearGradient } from 'expo-linear-gradient';
 import { 
   Wine, 
   BarChart3, 
   Calendar, 
   ChevronRight, 
   Heart, 
-  Smartphone,
   Info,
+  Sparkles,
+  Layout,
+  Grid3X3,
 } from 'lucide-react-native';
 import { Stack } from 'expo-router';
 
@@ -33,7 +34,6 @@ export default function SettingsScreen() {
   const {
     settings,
     updateWeekStartsOnSunday,
-    updateHapticsEnabled,
     updateIndicatorType,
     updateLayoutType,
   } = useSettings();
@@ -42,19 +42,11 @@ export default function SettingsScreen() {
   const [showDonateModal, setShowDonateModal] = useState(false);
   const [donationAmount, setDonationAmount] = useState('1');
 
-  const triggerHaptic = () => {
-    if (settings.hapticsEnabled) {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    }
-  };
-
   const handleDonate = () => {
-    if (settings.hapticsEnabled) Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     setShowDonateModal(true);
   };
 
   const handleConfirmDonate = () => {
-    if (settings.hapticsEnabled) Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     const amount = parseFloat(donationAmount) || 1;
     Linking.openURL(`https://www.paypal.com/paypalme/yourhandle/${amount}`);
     setShowDonateModal(false);
@@ -64,15 +56,17 @@ export default function SettingsScreen() {
     <View style={styles.container}>
       <Stack.Screen options={{ 
         title: 'Settings',
-        headerStyle: { backgroundColor: '#F2F2F7' },
+        headerStyle: { backgroundColor: '#0a0a0a' },
+        headerTintColor: '#fff',
         headerShadowVisible: false,
-        headerLargeTitle: true,
+        headerTitleStyle: { fontWeight: '700' },
       }} />
       
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         
         {/* VISUAL PREFERENCES */}
         <View style={styles.sectionHeaderContainer}>
+          <Layout size={14} color="#666" />
           <Text style={styles.sectionHeader}>Appearance</Text>
         </View>
         
@@ -86,15 +80,33 @@ export default function SettingsScreen() {
             <View style={styles.selectorContainer}>
               <TouchableOpacity 
                 style={[styles.selectorOption, settings.layoutType === 'vertical' && styles.selectorOptionActive]}
-                onPress={() => { triggerHaptic(); updateLayoutType('vertical'); }}
+                onPress={() => updateLayoutType('vertical')}
+                activeOpacity={0.7}
               >
+                {settings.layoutType === 'vertical' && (
+                  <LinearGradient
+                    colors={['#2a2a2a', '#1a1a1a']}
+                    style={StyleSheet.absoluteFill}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                  />
+                )}
                 <View style={[styles.layoutIconVertical, settings.layoutType === 'vertical' && styles.layoutIconActive]} />
                 <Text style={[styles.selectorLabel, settings.layoutType === 'vertical' && styles.selectorLabelActive]}>Vertical</Text>
               </TouchableOpacity>
               <TouchableOpacity 
                 style={[styles.selectorOption, settings.layoutType === 'horizontal' && styles.selectorOptionActive]}
-                onPress={() => { triggerHaptic(); updateLayoutType('horizontal'); }}
+                onPress={() => updateLayoutType('horizontal')}
+                activeOpacity={0.7}
               >
+                {settings.layoutType === 'horizontal' && (
+                  <LinearGradient
+                    colors={['#2a2a2a', '#1a1a1a']}
+                    style={StyleSheet.absoluteFill}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                  />
+                )}
                 <View style={[styles.layoutIconHorizontal, settings.layoutType === 'horizontal' && styles.layoutIconActive]} />
                 <Text style={[styles.selectorLabel, settings.layoutType === 'horizontal' && styles.selectorLabelActive]}>Horizontal</Text>
               </TouchableOpacity>
@@ -112,15 +124,33 @@ export default function SettingsScreen() {
             <View style={styles.selectorContainer}>
               <TouchableOpacity 
                 style={[styles.selectorOption, settings.indicatorType === 'emoji' && styles.selectorOptionActive]}
-                onPress={() => { triggerHaptic(); updateIndicatorType('emoji'); }}
+                onPress={() => updateIndicatorType('emoji')}
+                activeOpacity={0.7}
               >
+                {settings.indicatorType === 'emoji' && (
+                  <LinearGradient
+                    colors={['#2a2a2a', '#1a1a1a']}
+                    style={StyleSheet.absoluteFill}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                  />
+                )}
                 <Text style={[styles.selectorEmoji, settings.indicatorType === 'emoji' && styles.selectorEmojiActive]}>🍻</Text>
                 <Text style={[styles.selectorLabel, settings.indicatorType === 'emoji' && styles.selectorLabelActive]}>Icon</Text>
               </TouchableOpacity>
               <TouchableOpacity 
                 style={[styles.selectorOption, settings.indicatorType === 'x' && styles.selectorOptionActive]}
-                onPress={() => { triggerHaptic(); updateIndicatorType('x'); }}
+                onPress={() => updateIndicatorType('x')}
+                activeOpacity={0.7}
               >
+                {settings.indicatorType === 'x' && (
+                  <LinearGradient
+                    colors={['#2a2a2a', '#1a1a1a']}
+                    style={StyleSheet.absoluteFill}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                  />
+                )}
                 <View style={styles.selectorXContainer}>
                   <View style={[styles.selectorXLine1, settings.indicatorType === 'x' && styles.selectorXLineActive]} />
                   <View style={[styles.selectorXLine2, settings.indicatorType === 'x' && styles.selectorXLineActive]} />
@@ -133,6 +163,7 @@ export default function SettingsScreen() {
 
         {/* BEHAVIOR */}
         <View style={styles.sectionHeaderContainer}>
+          <Grid3X3 size={14} color="#666" />
           <Text style={styles.sectionHeader}>Preferences</Text>
         </View>
 
@@ -140,66 +171,65 @@ export default function SettingsScreen() {
           {/* Week Start */}
           <View style={styles.rowItem}>
             <View style={styles.rowContent}>
-              <View style={styles.iconBox}>
-                <Calendar size={20} color="#000" />
+              <LinearGradient
+                colors={['#1e3a5f', '#0d2137']}
+                style={styles.iconBox}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+              >
+                <Calendar size={18} color="#5ba3e0" />
+              </LinearGradient>
+              <View>
+                <Text style={styles.rowTitle}>Week Starts On</Text>
+                <Text style={styles.rowSubtitle}>First day of your week</Text>
               </View>
-              <Text style={styles.rowTitle}>Week Starts On</Text>
             </View>
             <View style={styles.toggleContainer}>
                <TouchableOpacity 
                 style={[styles.toggleBtn, settings.weekStartsOnSunday && styles.toggleBtnActive]}
-                onPress={() => { triggerHaptic(); updateWeekStartsOnSunday(true); }}
+                onPress={() => updateWeekStartsOnSunday(true)}
+                activeOpacity={0.7}
                >
                  <Text style={[styles.toggleBtnText, settings.weekStartsOnSunday && styles.toggleBtnTextActive]}>Sun</Text>
                </TouchableOpacity>
                <TouchableOpacity 
                 style={[styles.toggleBtn, !settings.weekStartsOnSunday && styles.toggleBtnActive]}
-                onPress={() => { triggerHaptic(); updateWeekStartsOnSunday(false); }}
+                onPress={() => updateWeekStartsOnSunday(false)}
+                activeOpacity={0.7}
                >
                  <Text style={[styles.toggleBtnText, !settings.weekStartsOnSunday && styles.toggleBtnTextActive]}>Mon</Text>
                </TouchableOpacity>
             </View>
           </View>
-
-          <View style={styles.separator} />
-
-          {/* Haptics */}
-          <View style={styles.rowItem}>
-             <View style={styles.rowContent}>
-              <View style={styles.iconBox}>
-                <Smartphone size={20} color="#000" />
-              </View>
-              <Text style={styles.rowTitle}>Haptic Feedback</Text>
-            </View>
-            <Switch
-              value={settings.hapticsEnabled}
-              onValueChange={(val) => {
-                if (val) Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-                updateHapticsEnabled(val);
-              }}
-              trackColor={{ false: '#e9e9ea', true: '#000' }}
-              thumbColor={'#fff'}
-            />
-          </View>
         </View>
 
         {/* SUPPORT */}
         <View style={styles.sectionHeaderContainer}>
+          <Sparkles size={14} color="#666" />
           <Text style={styles.sectionHeader}>Support</Text>
         </View>
 
         <View style={styles.sectionContainer}>
           <TouchableOpacity 
             style={styles.rowItem}
-            onPress={() => { triggerHaptic(); setShowInstructions(true); }}
+            onPress={() => setShowInstructions(true)}
+            activeOpacity={0.7}
           >
              <View style={styles.rowContent}>
-              <View style={styles.iconBox}>
-                <Info size={20} color="#000" />
+              <LinearGradient
+                colors={['#2d2d2d', '#1a1a1a']}
+                style={styles.iconBox}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+              >
+                <Info size={18} color="#888" />
+              </LinearGradient>
+              <View>
+                <Text style={styles.rowTitle}>How to use</Text>
+                <Text style={styles.rowSubtitle}>Learn the basics</Text>
               </View>
-              <Text style={styles.rowTitle}>How to use</Text>
             </View>
-            <ChevronRight size={20} color="#C7C7CC" />
+            <ChevronRight size={20} color="#444" />
           </TouchableOpacity>
 
           <View style={styles.separator} />
@@ -207,12 +237,21 @@ export default function SettingsScreen() {
           <TouchableOpacity 
             style={styles.rowItem}
             onPress={handleDonate}
+            activeOpacity={0.7}
           >
              <View style={styles.rowContent}>
-              <View style={[styles.iconBox, { backgroundColor: '#FFEBEE' }]}>
-                <Heart size={20} color="#F44336" fill="#F44336" />
+              <LinearGradient
+                colors={['#4a1c2e', '#2d1119']}
+                style={styles.iconBox}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+              >
+                <Heart size={18} color="#e85a7e" fill="#e85a7e" />
+              </LinearGradient>
+              <View>
+                <Text style={styles.rowTitle}>Donate</Text>
+                <Text style={styles.rowSubtitle}>Support development</Text>
               </View>
-              <Text style={styles.rowTitle}>Donate</Text>
             </View>
             <View style={styles.badge}>
               <Text style={styles.badgeText}>£1.00</Text>
@@ -221,8 +260,9 @@ export default function SettingsScreen() {
         </View>
 
         <View style={styles.footer}>
+          <View style={styles.footerLine} />
           <Text style={styles.footerText}>Drink Tracker v1.0.0</Text>
-          <Text style={styles.footerText}>Made with ❤️</Text>
+          <Text style={styles.footerSubtext}>Made with ❤️</Text>
         </View>
       </ScrollView>
 
@@ -237,7 +277,7 @@ export default function SettingsScreen() {
           <Pressable style={styles.modalContent} onPress={(e) => e.stopPropagation()}>
             <View style={styles.introHeader}>
               <View style={styles.introLogoContainer}>
-                <Wine size={32} color="#1a1a1a" strokeWidth={1.5} />
+                <Wine size={32} color="#fff" strokeWidth={1.5} />
               </View>
               <Text style={styles.introAppName}>Drink Tracker</Text>
               <Text style={styles.introTagline}>Track mindfully. Drink responsibly.</Text>
@@ -269,7 +309,7 @@ export default function SettingsScreen() {
                 </View>
                 <View style={styles.introStepContent}>
                   <View style={styles.introStepHeader}>
-                    <Wine size={20} color="#1a1a1a" strokeWidth={1.5} />
+                    <Wine size={20} color="#fff" strokeWidth={1.5} />
                     <Text style={styles.introStepTitle}>Log Drinks</Text>
                   </View>
                   <Text style={styles.introStepDescription}>
@@ -302,7 +342,7 @@ export default function SettingsScreen() {
                 </View>
                 <View style={styles.introStepContent}>
                   <View style={styles.introStepHeader}>
-                    <BarChart3 size={20} color="#1a1a1a" strokeWidth={1.5} />
+                    <BarChart3 size={20} color="#fff" strokeWidth={1.5} />
                     <Text style={styles.introStepTitle}>View Progress</Text>
                   </View>
                   <Text style={styles.introStepDescription}>
@@ -337,6 +377,9 @@ export default function SettingsScreen() {
       >
         <Pressable style={styles.modalOverlay} onPress={() => setShowDonateModal(false)}>
           <Pressable style={styles.donateModalContent} onPress={(e) => e.stopPropagation()}>
+            <View style={styles.donateIconContainer}>
+              <Heart size={32} color="#e85a7e" fill="#e85a7e" />
+            </View>
             <Text style={styles.donateModalTitle}>Support the Creator</Text>
             <Text style={styles.donateModalSubtitle}>Enter the amount you&apos;d like to donate</Text>
             
@@ -348,7 +391,7 @@ export default function SettingsScreen() {
                 onChangeText={setDonationAmount}
                 keyboardType="decimal-pad"
                 placeholder="1.00"
-                placeholderTextColor="#999"
+                placeholderTextColor="#555"
               />
             </View>
 
@@ -360,10 +403,8 @@ export default function SettingsScreen() {
                     styles.quickAmountButton,
                     donationAmount === amount && styles.quickAmountButtonActive,
                   ]}
-                  onPress={() => {
-                    if (settings.hapticsEnabled) Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-                    setDonationAmount(amount);
-                  }}
+                  onPress={() => setDonationAmount(amount)}
+                  activeOpacity={0.7}
                 >
                   <Text
                     style={[
@@ -380,13 +421,21 @@ export default function SettingsScreen() {
             <TouchableOpacity
               style={styles.confirmDonateButton}
               onPress={handleConfirmDonate}
+              activeOpacity={0.85}
             >
+              <LinearGradient
+                colors={['#e85a7e', '#c44569']}
+                style={StyleSheet.absoluteFill}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+              />
               <Text style={styles.confirmDonateText}>Donate £{parseFloat(donationAmount) || 1}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={styles.cancelDonateButton}
               onPress={() => setShowDonateModal(false)}
+              activeOpacity={0.7}
             >
               <Text style={styles.cancelDonateText}>Cancel</Text>
             </TouchableOpacity>
@@ -401,78 +450,82 @@ export default function SettingsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F2F2F7',
+    backgroundColor: '#0a0a0a',
   },
   scrollContent: {
     padding: 16,
     paddingBottom: 40,
   },
   sectionHeaderContainer: {
-    marginBottom: 8,
-    marginTop: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginBottom: 10,
+    marginTop: 20,
     paddingHorizontal: 4,
   },
   sectionHeader: {
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: '600',
-    color: '#636366',
+    color: '#666',
     textTransform: 'uppercase',
-    letterSpacing: 0.5,
+    letterSpacing: 1,
   },
   sectionContainer: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#141414',
     borderRadius: 16,
     overflow: 'hidden',
-    marginBottom: 8,
+    borderWidth: 1,
+    borderColor: '#222',
   },
   cardRow: {
     padding: 16,
   },
   cardHeader: {
-    marginBottom: 12,
+    marginBottom: 14,
   },
   cardTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#000',
+    color: '#fff',
     marginBottom: 4,
   },
   cardSubtitle: {
     fontSize: 13,
-    color: '#8E8E93',
+    color: '#666',
   },
   selectorContainer: {
     flexDirection: 'row',
-    gap: 12,
+    gap: 10,
   },
   selectorOption: {
     flex: 1,
-    backgroundColor: '#F2F2F7',
+    backgroundColor: '#1a1a1a',
     borderRadius: 12,
-    paddingVertical: 12,
+    paddingVertical: 14,
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 2,
-    borderColor: 'transparent',
+    borderWidth: 1,
+    borderColor: '#2a2a2a',
+    overflow: 'hidden',
   },
   selectorOptionActive: {
-    backgroundColor: '#1a1a1a',
-    borderColor: '#1a1a1a',
+    borderColor: '#444',
   },
   selectorLabel: {
     fontSize: 13,
     fontWeight: '600',
-    color: '#1a1a1a',
+    color: '#888',
   },
   selectorLabelActive: {
-    color: '#FFFFFF',
+    color: '#fff',
   },
   rowItem: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: 16,
-    minHeight: 56,
+    padding: 14,
+    minHeight: 64,
   },
   rowContent: {
     flexDirection: 'row',
@@ -480,91 +533,102 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   iconBox: {
-    width: 32,
-    height: 32,
-    borderRadius: 8,
-    backgroundColor: '#F2F2F7',
+    width: 40,
+    height: 40,
+    borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
   },
   rowTitle: {
-    fontSize: 16,
-    fontWeight: '500',
-    color: '#000',
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#fff',
+  },
+  rowSubtitle: {
+    fontSize: 12,
+    color: '#555',
+    marginTop: 2,
   },
   separator: {
-    height: StyleSheet.hairlineWidth,
-    backgroundColor: '#C6C6C8',
-    marginLeft: 60, // Align with text start
+    height: 1,
+    backgroundColor: '#222',
+    marginLeft: 66,
   },
   toggleContainer: {
     flexDirection: 'row',
-    backgroundColor: '#E9E9EA',
-    borderRadius: 8,
-    padding: 2,
+    backgroundColor: '#1a1a1a',
+    borderRadius: 10,
+    padding: 3,
+    borderWidth: 1,
+    borderColor: '#2a2a2a',
   },
   toggleBtn: {
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    borderRadius: 6,
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    borderRadius: 8,
   },
   toggleBtnActive: {
-    backgroundColor: '#FFFFFF',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 1,
-    elevation: 1,
+    backgroundColor: '#333',
   },
   toggleBtnText: {
     fontSize: 13,
-    fontWeight: '500',
-    color: '#636366',
+    fontWeight: '600',
+    color: '#666',
   },
   toggleBtnTextActive: {
-    color: '#000',
-    fontWeight: '600',
+    color: '#fff',
   },
   badge: {
-    backgroundColor: '#E9E9EA',
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 12,
+    backgroundColor: '#1f2d1f',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#2a4a2a',
   },
   badgeText: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#000',
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#6fcf6f',
   },
   footer: {
     alignItems: 'center',
-    paddingTop: 20,
-    gap: 4,
+    paddingTop: 32,
+    gap: 6,
+  },
+  footerLine: {
+    width: 40,
+    height: 3,
+    backgroundColor: '#222',
+    borderRadius: 2,
+    marginBottom: 12,
   },
   footerText: {
     fontSize: 13,
-    color: '#8E8E93',
+    fontWeight: '600',
+    color: '#444',
+  },
+  footerSubtext: {
+    fontSize: 12,
+    color: '#333',
   },
 
-  /* MODAL STYLES (MATCHING INTRO) */
+  /* MODAL STYLES */
   modalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    backgroundColor: 'rgba(0, 0, 0, 0.85)',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
   },
   modalContent: {
-    backgroundColor: '#FAFAFA',
-    borderRadius: 16,
+    backgroundColor: '#141414',
+    borderRadius: 20,
     padding: 24,
     maxWidth: 400,
     width: '100%',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
-    elevation: 5,
+    borderWidth: 1,
+    borderColor: '#2a2a2a',
   },
   introHeader: {
     alignItems: 'center',
@@ -573,29 +637,24 @@ const styles = StyleSheet.create({
   introLogoContainer: {
     width: 64,
     height: 64,
-    borderRadius: 18,
-    backgroundColor: '#fff',
+    borderRadius: 16,
+    backgroundColor: '#1a1a1a',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.06,
-    shadowRadius: 8,
-    elevation: 3,
     borderWidth: 1,
-    borderColor: '#f0f0f0',
+    borderColor: '#333',
   },
   introAppName: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#1a1a1a',
+    color: '#fff',
     letterSpacing: -0.5,
     marginBottom: 4,
   },
   introTagline: {
     fontSize: 13,
-    color: '#888',
+    color: '#666',
     fontWeight: '400',
   },
   introStepsContainer: {
@@ -604,29 +663,24 @@ const styles = StyleSheet.create({
   },
   introStepCard: {
     flexDirection: 'row',
-    backgroundColor: '#fff',
-    borderRadius: 14,
+    backgroundColor: '#1a1a1a',
+    borderRadius: 12,
     padding: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.04,
-    shadowRadius: 4,
-    elevation: 2,
     borderWidth: 1,
-    borderColor: '#f0f0f0',
+    borderColor: '#2a2a2a',
   },
   introStepNumberContainer: {
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: '#1a1a1a',
+    backgroundColor: '#333',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 12,
   },
   introStepNumber: {
     fontSize: 12,
-    fontWeight: '600',
+    fontWeight: '700',
     color: '#fff',
   },
   introStepContent: {
@@ -641,7 +695,7 @@ const styles = StyleSheet.create({
   introStepTitle: {
     fontSize: 15,
     fontWeight: '600',
-    color: '#1a1a1a',
+    color: '#fff',
   },
   introStepDescription: {
     fontSize: 13,
@@ -659,14 +713,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: 12,
     height: 1.5,
-    backgroundColor: '#d32f2f',
+    backgroundColor: '#e85a7e',
     transform: [{ rotate: '45deg' }],
   },
   introXLine2: {
     position: 'absolute',
     width: 12,
     height: 1.5,
-    backgroundColor: '#d32f2f',
+    backgroundColor: '#e85a7e',
     transform: [{ rotate: '-45deg' }],
   },
   introStepIconImage: {
@@ -677,47 +731,49 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   introButton: {
-    backgroundColor: '#1a1a1a',
+    backgroundColor: '#fff',
     borderRadius: 12,
     paddingVertical: 14,
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.15,
-    shadowRadius: 12,
-    elevation: 6,
   },
   introButtonText: {
-    color: '#fff',
+    color: '#000',
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '700',
     letterSpacing: 0.3,
   },
   introFooterNote: {
     fontSize: 12,
-    color: '#999',
+    color: '#555',
     textAlign: 'center',
   },
 
   /* DONATE MODAL */
   donateModalContent: {
-    backgroundColor: '#fff',
-    borderRadius: 20,
+    backgroundColor: '#141414',
+    borderRadius: 24,
     padding: 28,
     width: '90%',
     maxWidth: 380,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 12,
-    elevation: 8,
+    borderWidth: 1,
+    borderColor: '#2a2a2a',
+    alignItems: 'center',
+  },
+  donateIconContainer: {
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    backgroundColor: '#2d1119',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 16,
   },
   donateModalTitle: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: '700',
-    color: '#1a1a1a',
+    color: '#fff',
     textAlign: 'center',
-    marginBottom: 8,
+    marginBottom: 6,
   },
   donateModalSubtitle: {
     fontSize: 14,
@@ -728,68 +784,66 @@ const styles = StyleSheet.create({
   amountInputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f5f5f5',
-    borderRadius: 16,
+    backgroundColor: '#1a1a1a',
+    borderRadius: 14,
     borderWidth: 2,
-    borderColor: '#1a1a1a',
+    borderColor: '#333',
     paddingHorizontal: 20,
-    paddingVertical: 16,
+    paddingVertical: 14,
     marginBottom: 20,
+    width: '100%',
   },
   currencySymbol: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#1a1a1a',
+    color: '#fff',
     marginRight: 8,
   },
   amountInput: {
     flex: 1,
     fontSize: 28,
     fontWeight: '700',
-    color: '#1a1a1a',
+    color: '#fff',
     padding: 0,
   },
   quickAmountButtons: {
     flexDirection: 'row',
-    gap: 12,
+    gap: 10,
     marginBottom: 24,
+    width: '100%',
   },
   quickAmountButton: {
     flex: 1,
     paddingVertical: 12,
-    backgroundColor: '#f5f5f5',
-    borderRadius: 12,
-    borderWidth: 2,
-    borderColor: '#e0e0e0',
+    backgroundColor: '#1a1a1a',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#2a2a2a',
     alignItems: 'center',
   },
   quickAmountButtonActive: {
-    backgroundColor: '#f0f0f0',
-    borderColor: '#1a1a1a',
+    backgroundColor: '#2a2a2a',
+    borderColor: '#444',
   },
   quickAmountText: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '700',
     color: '#666',
   },
   quickAmountTextActive: {
-    color: '#1a1a1a',
+    color: '#fff',
   },
   confirmDonateButton: {
-    backgroundColor: '#1a1a1a',
     borderRadius: 14,
     paddingVertical: 16,
     alignItems: 'center',
     marginBottom: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
-    elevation: 4,
+    width: '100%',
+    overflow: 'hidden',
   },
   confirmDonateText: {
     color: '#fff',
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: '700',
   },
   cancelDonateButton: {
@@ -797,8 +851,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   cancelDonateText: {
-    color: '#999',
-    fontSize: 16,
+    color: '#666',
+    fontSize: 15,
     fontWeight: '600',
   },
   selectorEmoji: {
@@ -819,37 +873,36 @@ const styles = StyleSheet.create({
     position: 'absolute' as const,
     width: 14,
     height: 2,
-    backgroundColor: '#d32f2f',
+    backgroundColor: '#e85a7e',
     transform: [{ rotate: '45deg' }],
   },
   selectorXLine2: {
     position: 'absolute' as const,
     width: 14,
     height: 2,
-    backgroundColor: '#d32f2f',
+    backgroundColor: '#e85a7e',
     transform: [{ rotate: '-45deg' }],
   },
   selectorXLineActive: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#fff',
   },
   layoutIconVertical: {
-    width: 18,
-    height: 24,
+    width: 16,
+    height: 22,
     borderRadius: 4,
     borderWidth: 2,
-    borderColor: '#000',
-    marginBottom: 4,
+    borderColor: '#666',
+    marginBottom: 6,
   },
   layoutIconHorizontal: {
-    width: 24,
-    height: 18,
+    width: 22,
+    height: 16,
     borderRadius: 4,
     borderWidth: 2,
-    borderColor: '#000',
-    marginBottom: 4,
+    borderColor: '#666',
+    marginBottom: 6,
   },
   layoutIconActive: {
-    borderColor: '#FFF',
-    backgroundColor: '#FFF',
+    borderColor: '#fff',
   },
 });
