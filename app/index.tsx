@@ -33,6 +33,14 @@ const defaultDrinkTemplates: DrinkTemplate[] = [
     percentage: 13.5,
   },
   {
+    id: 'default-wine-small',
+    name: 'Wine (small glass)',
+    emoji: 'https://r2-pub.rork.com/generated-images/a0333fe3-977d-4956-b403-0f797ea0e2f9.png',
+    units: 2.36,
+    size: '175',
+    percentage: 13.5,
+  },
+  {
     id: 'default-beer',
     name: 'Beer (Pint)',
     emoji: 'https://r2-pub.rork.com/generated-images/fe044876-cab6-4726-a476-ce85fbec954b.png',
