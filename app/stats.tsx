@@ -13,13 +13,6 @@ import { useSettings } from '@/contexts/SettingsContext';
 import { ChevronLeft, ChevronRight } from 'lucide-react-native';
 import * as Haptics from 'expo-haptics';
 
-const dayCardStars = [
-  'https://r2-pub.rork.com/generated-images/f9aa9df6-9430-4ad2-a2c3-c99b65e9bca8.png',
-  'https://r2-pub.rork.com/generated-images/94236391-8928-4233-9431-4e034ba404b8.png',
-  'https://r2-pub.rork.com/generated-images/e82ae9a9-bc67-4969-96c9-18245d23744d.png',
-  'https://r2-pub.rork.com/generated-images/2a7459c4-3c65-4c1a-a6b0-d10e81ad8291.png',
-];
-
 interface DataPoint {
   label: string;
   value: number;
@@ -367,11 +360,7 @@ export default function StatsScreen() {
                     )
                   ) : !dayData.isFuture && dayData.drank === false ? (
                     <View style={styles.calendarStar}>
-                      <Image 
-                        source={{ uri: dayCardStars[index % dayCardStars.length] }} 
-                        style={styles.calendarStarImage}
-                        resizeMode="contain"
-                      />
+                      <Text style={styles.calendarStarText}>★</Text>
                     </View>
                   ) : null}
                 </>
@@ -490,13 +479,17 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   calendarSection: {
-    backgroundColor: '#141414',
+    backgroundColor: '#0d1117',
     padding: 16,
     marginHorizontal: 16,
     marginTop: 16,
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: '#222',
+    borderColor: '#00d4aa40',
+    shadowColor: '#00d4aa',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.15,
+    shadowRadius: 12,
   },
   calendarHeader: {
     flexDirection: 'row',
@@ -509,20 +502,23 @@ const styles = StyleSheet.create({
     height: 36,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#1a1a1a',
+    backgroundColor: '#111820',
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#333',
+    borderColor: '#00d4aa50',
   },
   monthButtonDisabled: {
-    backgroundColor: '#0f0f0f',
-    borderColor: '#1a1a1a',
+    backgroundColor: '#0d1117',
+    borderColor: '#1a2332',
   },
   calendarMonth: {
     fontSize: 18,
     fontWeight: '700' as const,
-    color: '#00d4aa',
+    color: '#00ffcc',
     letterSpacing: 0.5,
+    textShadowColor: '#00ffcc',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 8,
   },
   calendarWeekDays: {
     flexDirection: 'row',
@@ -533,8 +529,8 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: 'center',
     fontSize: 11,
-    fontWeight: '600' as const,
-    color: '#666',
+    fontWeight: '700' as const,
+    color: '#00d4aa',
     textTransform: 'uppercase',
     letterSpacing: 0.5,
   },
@@ -548,14 +544,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 0.5,
-    borderColor: '#1f1f1f',
+    borderColor: '#1a2332',
     position: 'relative',
     paddingVertical: 4,
   },
   calendarDayNumber: {
     fontSize: 14,
-    fontWeight: '600' as const,
-    color: '#888',
+    fontWeight: '700' as const,
+    color: '#e0e0e0',
     marginBottom: 3,
   },
   calendarX: {
@@ -589,14 +585,17 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   calendarStar: {
-    width: 20,
-    height: 20,
+    width: 18,
+    height: 18,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  calendarStarImage: {
-    width: 20,
-    height: 20,
+  calendarStarText: {
+    fontSize: 14,
+    color: '#00ffcc',
+    textShadowColor: '#00ffcc',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 6,
   },
   calendarDrinkIcon: {
     width: 20,
