@@ -820,14 +820,6 @@ const styles = StyleSheet.create({
     borderRadius: 1,
     transformOrigin: '0% 50%',
   },
-  limitLine: {
-    position: 'absolute',
-    left: 35,
-    right: 0,
-    height: 2,
-    backgroundColor: 'rgba(255, 71, 87, 0.18)',
-    borderRadius: 2,
-  },
   barValueText: {
     position: 'absolute',
     top: 4,
