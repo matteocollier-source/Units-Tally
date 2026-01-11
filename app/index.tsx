@@ -1680,8 +1680,8 @@ const styles = StyleSheet.create({
     marginLeft: 4,
   },
   drinkEmojiImage: {
-    width: 44,
-    height: 44,
+    width: 48,
+    height: 48,
     marginRight: 12,
   },
   calculatedUnitsContainer: {
