@@ -1295,6 +1295,7 @@ const styles = StyleSheet.create({
   dayBarCenter: {
     alignItems: 'center',
     justifyContent: 'center',
+    marginLeft: -24,
   },
   dayBarStatsRow: {
     flexDirection: 'row',
@@ -1321,7 +1322,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
   dayBarUnitsGreen: {
-    color: '#4a90e2',
+    color: '#6ba5a7',
   },
   dayBarToggle: {
     width: 40,
@@ -1965,8 +1966,8 @@ const styles = StyleSheet.create({
     letterSpacing: 0.3,
   },
   customStarImage: {
-    width: 44,
-    height: 44,
+    width: 38,
+    height: 38,
   },
   dayCardDrinkIcon: {
     width: 34,
