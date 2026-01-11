@@ -23,7 +23,32 @@ const dayCardStars = [
   'https://r2-pub.rork.com/generated-images/cde08da4-d70d-4899-9eac-7ffb0ea71de5.png',
 ];
 
-
+const defaultDrinkTemplates: DrinkTemplate[] = [
+  {
+    id: 'default-wine',
+    name: 'Wine (large glass)',
+    emoji: 'https://r2-pub.rork.com/generated-images/0cc54217-20c0-4c7b-89f2-259fcaff0110.png',
+    units: 3.38,
+    size: '250',
+    percentage: 13.5,
+  },
+  {
+    id: 'default-beer',
+    name: 'Beer (Pint)',
+    emoji: 'https://r2-pub.rork.com/generated-images/fe044876-cab6-4726-a476-ce85fbec954b.png',
+    units: 2.84,
+    size: '568',
+    percentage: 5,
+  },
+  {
+    id: 'default-spirits',
+    name: 'Spirits',
+    emoji: 'https://r2-pub.rork.com/generated-images/621b4703-f453-4156-9b65-4b6b361d1fa6.png',
+    units: 2,
+    size: '50',
+    percentage: 40,
+  },
+];
 
 export default function DrinkTrackerScreen() {
   const drinkTracker = useDrinkTracker();
@@ -53,33 +78,6 @@ export default function DrinkTrackerScreen() {
   const addDrinkTemplate = settingsContext?.addDrinkTemplate ?? (() => undefined);
   const deleteDrinkTemplate = settingsContext?.deleteDrinkTemplate ?? (() => {});
   const markIntroSeen = settingsContext?.markIntroSeen ?? (() => {});
-
-  const defaultDrinkTemplates: DrinkTemplate[] = [
-    {
-      id: 'default-wine',
-      name: 'Wine (large glass)',
-      emoji: 'https://r2-pub.rork.com/generated-images/0cc54217-20c0-4c7b-89f2-259fcaff0110.png',
-      units: 3.38,
-      size: '250',
-      percentage: 13.5,
-    },
-    {
-      id: 'default-beer',
-      name: 'Beer (Pint)',
-      emoji: 'https://r2-pub.rork.com/generated-images/fe044876-cab6-4726-a476-ce85fbec954b.png',
-      units: 2.84,
-      size: '568',
-      percentage: 5,
-    },
-    {
-      id: 'default-spirits',
-      name: 'Spirits',
-      emoji: 'https://r2-pub.rork.com/generated-images/621b4703-f453-4156-9b65-4b6b361d1fa6.png',
-      units: 2,
-      size: '50',
-      percentage: 40,
-    },
-  ];
 
   const displayDrinks = settings.drinkTemplates.length > 0 ? settings.drinkTemplates : defaultDrinkTemplates;
 
@@ -274,7 +272,12 @@ export default function DrinkTrackerScreen() {
       .sort((a, b) => (b[1] ?? 0) - (a[1] ?? 0))[0]?.[0];
 
     if (!topDrinkId) return undefined;
-    return settings.drinkTemplates.find(t => t.id === topDrinkId)?.emoji;
+    
+    const userDrink = settings.drinkTemplates.find(t => t.id === topDrinkId);
+    if (userDrink?.emoji) return userDrink.emoji;
+    
+    const defaultDrink = defaultDrinkTemplates.find(t => t.id === topDrinkId);
+    return defaultDrink?.emoji;
   }, [data, settings.drinkTemplates]);
 
   const dayIndicatorIcons = useMemo(() => {
