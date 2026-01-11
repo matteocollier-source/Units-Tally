@@ -245,17 +245,7 @@ export default function StatsScreen() {
             ))}
           </View>
 
-          {typeof weeklyLimit === 'number' && weeklyLimit > 0 && (
-            <View
-              pointerEvents="none"
-              style={[
-                styles.limitLine,
-                {
-                  bottom: 30 + (weeklyLimit / normalizedMax) * (height - 40),
-                },
-              ]}
-            />
-          )}
+
 
           <View style={styles.barsContainer}>
             {dataPoints.map((point, index) => {
