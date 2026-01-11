@@ -431,8 +431,8 @@ export default function DrinkTrackerScreen() {
           </View>
           <View style={styles.statsRowBottom}>
             <TouchableOpacity style={styles.weekStatCircle} onPress={handleStatPress}>
-              <Text style={styles.weekStatValue}>{currentWeekData.drinkDays}</Text>
-              <Text style={styles.weekStatLabel}>Drink Day{'\n'}This Week</Text>
+              <Text style={styles.weekStatValue}>{currentWeekData.drinkFreeDays}</Text>
+              <Text style={styles.weekStatLabel}>Drink-Free Days{'\n'}This Week</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.weekStatCircle} onPress={handleStatPress}>
               <Text style={styles.weekStatValue}>{averageDrinkFreeDays.toFixed(1)}</Text>
@@ -1220,7 +1220,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
-    marginTop: 4,
+    marginTop: -2,
   },
   dayCardDrinks: {
     fontSize: 11,
