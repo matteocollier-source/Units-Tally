@@ -116,7 +116,7 @@ export default function ManageDrinksScreen() {
               { uri: 'https://r2-pub.rork.com/generated-images/0edd4d79-3c60-441b-96f9-dc2f38f7870e.png', id: 'beer-large', name: 'Beer (Large Bottle)', size: '660', percentage: 5 },
               { uri: 'https://r2-pub.rork.com/generated-images/5b0f56f5-ad3f-47cd-96a8-69880af9f38b.png', id: 'beer-small', name: 'Beer (Small Bottle)', size: '330', percentage: 5 },
               { uri: 'https://r2-pub.rork.com/generated-images/0cc54217-20c0-4c7b-89f2-259fcaff0110.png', id: 'wine-glass', name: 'Wine (large glass)', size: '250', percentage: 13.5 },
-              { uri: 'https://r2-pub.rork.com/generated-images/a0333fe3-977d-4956-b403-0f797ea0e2f9.png', id: 'wine-glass-small', name: 'Wine (small glass)', size: '175', percentage: 13.5 },
+              { uri: 'https://r2-pub.rork.com/generated-images/1fb594a2-126d-4e03-beb6-29f48a9de1c9.png', id: 'wine-glass-small', name: 'Wine (small glass)', size: '175', percentage: 13.5 },
               { uri: 'https://r2-pub.rork.com/generated-images/d4add219-6b92-4a02-a755-019b794a0c3a.png', id: 'wine-bottle', name: 'Wine (Bottle)', size: '750', percentage: 13.5 },
               { uri: 'https://r2-pub.rork.com/generated-images/621b4703-f453-4156-9b65-4b6b361d1fa6.png', id: 'spirits', name: 'Spirits', size: '50', percentage: 40 },
               { uri: 'https://r2-pub.rork.com/generated-images/5a4c3b1a-7d2f-4c36-92bc-48c8a2cc14b9.png', id: 'cocktail', name: 'Cocktail', size: '200', percentage: 15 },
