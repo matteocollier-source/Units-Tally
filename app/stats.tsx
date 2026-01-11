@@ -550,12 +550,13 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: '#1f1f1f',
     position: 'relative',
+    paddingVertical: 4,
   },
   calendarDayNumber: {
     fontSize: 14,
     fontWeight: '600' as const,
     color: '#888',
-    marginBottom: 2,
+    marginBottom: 3,
   },
   calendarX: {
     width: 14,
