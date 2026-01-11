@@ -552,7 +552,7 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   calendarDayNumber: {
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: '600' as const,
     color: '#888',
     marginBottom: 2,
