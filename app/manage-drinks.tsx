@@ -27,7 +27,7 @@ export default function ManageDrinksScreen() {
       }
     }
     const sizeMl = 250;
-    const percentage = 13.5;
+    const percentage = 12;
     const calculatedUnits = (sizeMl * percentage) / 1000;
     return {
       id: '',
@@ -112,17 +112,17 @@ export default function ManageDrinksScreen() {
             alwaysBounceHorizontal={false}
           >
             {[
-              { uri: 'https://r2-pub.rork.com/generated-images/fe044876-cab6-4726-a476-ce85fbec954b.png', id: 'beer', name: 'Beer (Pint)', size: '568', percentage: 5 },
-              { uri: 'https://r2-pub.rork.com/generated-images/0edd4d79-3c60-441b-96f9-dc2f38f7870e.png', id: 'beer-large', name: 'Beer (Large Bottle)', size: '660', percentage: 5 },
-              { uri: 'https://r2-pub.rork.com/generated-images/5b0f56f5-ad3f-47cd-96a8-69880af9f38b.png', id: 'beer-small', name: 'Beer (Small Bottle)', size: '330', percentage: 5 },
-              { uri: 'https://r2-pub.rork.com/generated-images/0cc54217-20c0-4c7b-89f2-259fcaff0110.png', id: 'wine-glass', name: 'Wine (large glass)', size: '250', percentage: 13.5 },
-              { uri: 'https://r2-pub.rork.com/generated-images/1fb594a2-126d-4e03-beb6-29f48a9de1c9.png', id: 'wine-glass-small', name: 'Wine (small glass)', size: '175', percentage: 13.5 },
-              { uri: 'https://r2-pub.rork.com/generated-images/d4add219-6b92-4a02-a755-019b794a0c3a.png', id: 'wine-bottle', name: 'Wine (Bottle)', size: '750', percentage: 13.5 },
-              { uri: 'https://r2-pub.rork.com/generated-images/621b4703-f453-4156-9b65-4b6b361d1fa6.png', id: 'spirits', name: 'Spirits', size: '50', percentage: 40 },
+              { uri: 'https://r2-pub.rork.com/generated-images/fe044876-cab6-4726-a476-ce85fbec954b.png', id: 'beer', name: 'Beer (Pint)', size: '568', percentage: 4 },
+              { uri: 'https://r2-pub.rork.com/generated-images/0edd4d79-3c60-441b-96f9-dc2f38f7870e.png', id: 'beer-large', name: 'Beer (Large Bottle)', size: '660', percentage: 4 },
+              { uri: 'https://r2-pub.rork.com/generated-images/5b0f56f5-ad3f-47cd-96a8-69880af9f38b.png', id: 'beer-small', name: 'Beer (Small Bottle)', size: '330', percentage: 4 },
+              { uri: 'https://r2-pub.rork.com/generated-images/0cc54217-20c0-4c7b-89f2-259fcaff0110.png', id: 'wine-glass', name: 'Wine (large glass)', size: '250', percentage: 12 },
+              { uri: 'https://r2-pub.rork.com/generated-images/1fb594a2-126d-4e03-beb6-29f48a9de1c9.png', id: 'wine-glass-small', name: 'Wine (small glass)', size: '175', percentage: 12 },
+              { uri: 'https://r2-pub.rork.com/generated-images/d4add219-6b92-4a02-a755-019b794a0c3a.png', id: 'wine-bottle', name: 'Wine (Bottle)', size: '750', percentage: 12 },
+              { uri: 'https://r2-pub.rork.com/generated-images/621b4703-f453-4156-9b65-4b6b361d1fa6.png', id: 'spirits', name: 'Spirits', size: '25', percentage: 40 },
               { uri: 'https://r2-pub.rork.com/generated-images/5a4c3b1a-7d2f-4c36-92bc-48c8a2cc14b9.png', id: 'cocktail', name: 'Cocktail', size: '200', percentage: 15 },
-              { uri: 'https://r2-pub.rork.com/generated-images/ed6b1be5-43de-4146-9240-abfd8fdd6aa0.png', id: 'shot', name: 'Shot', size: '35', percentage: 40 },
+              { uri: 'https://r2-pub.rork.com/generated-images/ed6b1be5-43de-4146-9240-abfd8fdd6aa0.png', id: 'shot', name: 'Shot', size: '25', percentage: 40 },
               { uri: 'https://r2-pub.rork.com/generated-images/bd29c4f2-d6e0-438b-8c75-08f896128d98.png', id: 'tropical', name: 'Tropical', size: '250', percentage: 10 },
-              { uri: 'https://r2-pub.rork.com/generated-images/custom-drink.png', id: 'custom', name: 'Custom', size: '250', percentage: 5 },
+              { uri: 'https://r2-pub.rork.com/generated-images/custom-drink.png', id: 'custom', name: 'Custom', size: '250', percentage: 4 },
             ].map((item) => {
               const isDuplicate = !editingDrink.id && item.id !== 'custom' &&
                 settings.drinkTemplates.some(t => t.name === item.name);
