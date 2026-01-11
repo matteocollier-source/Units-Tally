@@ -1069,7 +1069,7 @@ const styles = StyleSheet.create({
     width: 140,
     height: 140,
     borderRadius: 70,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#e8e8e8',
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 4,
@@ -1249,19 +1249,19 @@ const styles = StyleSheet.create({
   },
   dayBar: {
     flexDirection: 'row',
-    height: 56,
+    height: 48,
     backgroundColor: '#fff',
     marginHorizontal: 16,
-    marginBottom: 8,
-    borderRadius: 12,
+    marginBottom: 6,
+    borderRadius: 10,
     borderWidth: 1,
     borderColor: '#e8e8e8',
     alignItems: 'center',
-    paddingHorizontal: 12,
+    paddingHorizontal: 10,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.06,
+    shadowRadius: 3,
     elevation: 2,
   },
   dayBarWeekend: {
@@ -1310,7 +1310,7 @@ const styles = StyleSheet.create({
   dayBarStatValue: {
     fontSize: 16,
     fontWeight: '700' as const,
-    color: '#6ba5a7',
+    color: '#4a90e2',
     fontFamily: 'monospace',
   },
   dayBarStatLabel: {
@@ -1321,7 +1321,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
   dayBarUnitsGreen: {
-    color: '#6ba5a7',
+    color: '#4a90e2',
   },
   dayBarToggle: {
     width: 40,
