@@ -45,7 +45,7 @@ export default function IntroScreen() {
         <View style={styles.logoContainer}>
           <Wine size={32} color="#1a1a1a" strokeWidth={1.5} />
         </View>
-        <Text style={styles.appName}>Drink Tracker</Text>
+        <Text style={styles.appName}>Units Tally</Text>
         <Text style={styles.tagline}>Track mindfully. Drink responsibly.</Text>
       </View>
 
@@ -179,6 +179,7 @@ const styles = StyleSheet.create({
     color: '#1a1a1a',
     letterSpacing: -0.5,
     marginBottom: 6,
+    fontFamily: 'Seville',
   },
   tagline: {
     fontSize: 15,
