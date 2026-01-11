@@ -305,13 +305,21 @@ export default function DrinkTrackerScreen() {
   };
 
   const getAverageDrinkFreeDays = () => {
-    const historyStart = new Date('2025-06-01');
+    const dates = Object.keys(data).filter(date => {
+      const entry = data[date];
+      return entry && (entry.drank || entry.units > 0 || entry.drinkCount > 0 || Object.keys(entry.drinkCounts || {}).length > 0);
+    });
+    
+    if (dates.length === 0) return 0;
+    
+    const earliestDate = dates.sort()[0];
+    const historyStart = new Date(earliestDate);
     historyStart.setHours(0, 0, 0, 0);
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    const daysTotal = Math.max(0, Math.floor((today.getTime() - historyStart.getTime()) / (1000 * 60 * 60 * 24)) + 1);
+    const daysTotal = Math.max(1, Math.floor((today.getTime() - historyStart.getTime()) / (1000 * 60 * 60 * 24)) + 1);
     const weeksTotal = Math.max(1, daysTotal / 7);
 
     let drinkFreeDays = 0;
@@ -320,8 +328,9 @@ export default function DrinkTrackerScreen() {
       const d = new Date(historyStart);
       d.setDate(historyStart.getDate() + i);
       const iso = d.toISOString().split('T')[0];
-      const units = data[iso]?.units ?? 0;
-      if (units <= 0) drinkFreeDays += 1;
+      const entry = data[iso];
+      const drank = entry?.drank || (entry?.units ?? 0) > 0;
+      if (!drank) drinkFreeDays += 1;
     }
 
     const avgDrinkFreeDaysPerWeek = drinkFreeDays / weeksTotal;
