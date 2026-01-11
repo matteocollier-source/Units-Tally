@@ -32,7 +32,7 @@ const SETTINGS_KEY = '@drink_tracker_settings';
 const defaultDrinkTemplates: DrinkTemplate[] = [
   {
     id: 'default-wine',
-    name: 'Wine (Glass)',
+    name: 'Wine (large glass)',
     emoji: 'https://r2-pub.rork.com/generated-images/0cc54217-20c0-4c7b-89f2-259fcaff0110.png',
     units: 3.38,
     size: '250',
