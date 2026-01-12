@@ -77,7 +77,7 @@ export default function DrinkTrackerScreen() {
   
   const weeks = useMemo(() => drinkTracker?.weeks ?? [], [drinkTracker?.weeks]);
   const statistics = drinkTracker?.statistics ?? { avgDrinkingDaysPerWeek: 0, avgUnitsPerWeek: 0 };
-  const toggleDrank = drinkTracker?.toggleDrank ?? (() => {});
+
   const addUnits = drinkTracker?.addUnits ?? (() => {});
   const isLoading = drinkTracker?.isLoading ?? true;
   const data = useMemo(() => drinkTracker?.data ?? {}, [drinkTracker?.data]);
@@ -186,10 +186,7 @@ export default function DrinkTrackerScreen() {
     }
   };
 
-  const handleToggle = (date: string) => {
-    maybeHaptic(Haptics.ImpactFeedbackStyle.Medium);
-    toggleDrank(date);
-  };
+
 
   const handleAddDrink = (units: number, drinkId: string, drink?: DrinkTemplate) => {
     if (!selectedDate) return;
@@ -278,12 +275,7 @@ export default function DrinkTrackerScreen() {
     }
   };
 
-  const handleUnitPress = (date: string) => {
-    maybeHaptic(Haptics.ImpactFeedbackStyle.Light);
-    setSelectedDate(date);
-    syncDrinkCountsFromData(date);
-    setModalVisible(true);
-  };
+
 
   const getDrinkIconForDate = useCallback((date: string): string | undefined => {
     const entry = data[date];
@@ -478,12 +470,12 @@ export default function DrinkTrackerScreen() {
                   
                   return (
                     <View key={dayIndex} style={styles.dayCardWrapper}>
-                      <Pressable
-                        style={({ pressed }) => [
+                      <TouchableOpacity
+                        activeOpacity={0.7}
+                        style={[
                           styles.dayCard,
                           isWeekend && styles.dayCardWeekend,
                           isToday && styles.dayCardToday,
-                          pressed && styles.dayCardPressed,
                         ]}
                         onPress={() => {
                           console.log('[DayCard] pressed', { date: day.date });
@@ -512,31 +504,14 @@ export default function DrinkTrackerScreen() {
                             </Text>
                           </View>
 
-                          <Pressable 
-                            style={styles.dayCardCenterSection}
-                            onPress={(e) => {
-                              e.stopPropagation();
-                              console.log('[DayCardStats] pressed', { date: day.date });
-                              handleUnitPress(day.date);
-                            }}
-                            hitSlop={10}
-                          >
+                          <View style={styles.dayCardCenterSection}>
                             <Text style={styles.dayCardDrinks}>{day.drinkCount}</Text>
                             <Text style={styles.dayCardDrinksLabel}>drinks</Text>
                             <Text style={[styles.dayCardUnits, day.units <= 14 && styles.dayCardUnitsGreen]}>{(Math.ceil(day.units * 10) / 10).toFixed(1)}</Text>
                             <Text style={styles.dayCardUnitsLabel}>units</Text>
-                          </Pressable>
+                          </View>
 
-                          <Pressable
-                            style={styles.dayCardRightSection}
-                            onPress={(e) => {
-                              e.stopPropagation();
-                              console.log('[DayCardToggle] pressed', { date: day.date, drank: day.drank });
-                              handleToggle(day.date);
-                            }}
-                            hitSlop={12}
-                            testID={`day-card-toggle-${day.date}`}
-                          >
+                          <View style={styles.dayCardRightSection}>
                             {day.drank ? (
                               settings.indicatorType === 'emoji' && dayIndicatorIcons[day.date] ? (
                                 dayIndicatorIcons[day.date]?.startsWith('http') ? (
@@ -561,9 +536,9 @@ export default function DrinkTrackerScreen() {
                                 resizeMode="contain"
                               />
                             )}
-                          </Pressable>
+                          </View>
                         </View>
-                      </Pressable>
+                      </TouchableOpacity>
                     </View>
                     );
                   })}
@@ -604,13 +579,13 @@ export default function DrinkTrackerScreen() {
                       const isToday = day.date === new Date().toISOString().split('T')[0];
                       
                       return (
-                        <Pressable
+                        <TouchableOpacity
                           key={dayIndex}
-                          style={({ pressed }) => [
+                          activeOpacity={0.7}
+                          style={[
                             styles.dayBar,
                             isWeekend && styles.dayBarWeekend,
                             isToday && styles.dayBarToday,
-                            pressed && styles.dayBarPressed,
                           ]}
                           onPress={() => {
                             console.log('[DayBar] pressed', { date: day.date });
@@ -640,15 +615,7 @@ export default function DrinkTrackerScreen() {
 
                           <View style={{ flex: 1 }} />
 
-                          <Pressable
-                            style={styles.dayBarCenter}
-                            onPress={(e) => {
-                              e.stopPropagation();
-                              console.log('[DayBarStats] pressed', { date: day.date });
-                              handleUnitPress(day.date);
-                            }}
-                            hitSlop={10}
-                          >
+                          <View style={styles.dayBarCenter}>
                             <View style={styles.dayBarStatsRow}>
                               <View style={styles.dayBarStatItem}>
                                 <Text style={styles.dayBarStatValue}>{day.drinkCount}</Text>
@@ -661,20 +628,11 @@ export default function DrinkTrackerScreen() {
                                 <Text style={styles.dayBarStatLabel}>Units</Text>
                               </View>
                             </View>
-                          </Pressable>
+                          </View>
 
                           <View style={{ flex: 1 }} />
 
-                          <Pressable
-                            style={styles.dayBarToggle}
-                            onPress={(e) => {
-                              e.stopPropagation();
-                              console.log('[DayBarToggle] pressed', { date: day.date, drank: day.drank });
-                              handleToggle(day.date);
-                            }}
-                            hitSlop={12}
-                            testID={`day-bar-toggle-${day.date}`}
-                          >
+                          <View style={styles.dayBarToggle}>
                             {day.drank ? (
                               settings.indicatorType === 'emoji' && dayIndicatorIcons[day.date] ? (
                                 dayIndicatorIcons[day.date]?.startsWith('http') ? (
@@ -699,8 +657,8 @@ export default function DrinkTrackerScreen() {
                                 resizeMode="contain"
                               />
                             )}
-                          </Pressable>
-                        </Pressable>
+                          </View>
+                        </TouchableOpacity>
                       );
                     })}
                   
