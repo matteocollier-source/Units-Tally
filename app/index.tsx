@@ -761,17 +761,15 @@ export default function DrinkTrackerScreen() {
 
       <View style={styles.bottomNavContainer}>
         <View style={styles.bottomNav}>
-          <TouchableOpacity style={styles.navButton} onPress={handleHomePress}>
-            <Home size={22} color="#6ba5a7" strokeWidth={2.5} />
-            <Text style={styles.navButtonText}>HOME</Text>
+          <TouchableOpacity style={styles.navButtonSquare} onPress={handleHomePress}>
+            <Home size={24} color="#6ba5a7" strokeWidth={2.5} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.navButton} onPress={handleStatPress}>
+          <TouchableOpacity style={styles.navButtonCenter} onPress={handleStatPress}>
             <BarChart3 size={22} color="#6ba5a7" strokeWidth={2.5} />
-            <Text style={styles.navButtonText}>STATS</Text>
+            <Text style={styles.navButtonCenterText}>Stats Feedback</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.navButton} onPress={() => router.push('/settings' as any)}>
-            <Settings size={22} color="#6ba5a7" strokeWidth={2.5} />
-            <Text style={styles.navButtonText}>SETTINGS</Text>
+          <TouchableOpacity style={styles.navButtonSquare} onPress={() => router.push('/settings' as any)}>
+            <Settings size={24} color="#6ba5a7" strokeWidth={2.5} />
           </TouchableOpacity>
         </View>
       </View>
@@ -1756,11 +1754,26 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     gap: 12,
   },
-  navButton: {
-    flex: 1,
+  navButtonSquare: {
+    width: 56,
+    height: 56,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 16,
+    borderRadius: 14,
+    backgroundColor: '#202124',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.25,
+    shadowRadius: 10,
+    elevation: 10,
+  },
+  navButtonCenter: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 18,
+    paddingHorizontal: 20,
     borderRadius: 16,
     backgroundColor: '#202124',
     shadowColor: '#000',
@@ -1768,14 +1781,14 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 10,
     elevation: 10,
-    gap: 4,
+    gap: 10,
   },
-  navButtonText: {
-    fontSize: 9,
-    fontWeight: '900' as const,
+  navButtonCenterText: {
+    fontSize: 15,
+    fontWeight: '800' as const,
     color: '#6ba5a7',
     fontFamily: 'monospace',
-    letterSpacing: 1,
+    letterSpacing: 0.5,
   },
   confettiContainer: {
     position: 'absolute',
