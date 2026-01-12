@@ -2,7 +2,42 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import createContextHook from '@nkzw/create-context-hook';
 import { useCallback, useEffect, useState } from 'react';
-import { useSettings } from './SettingsContext';
+import { useSettings, DrinkTemplate } from './SettingsContext';
+
+const defaultDrinkTemplates: DrinkTemplate[] = [
+  {
+    id: 'default-wine',
+    name: 'Wine (large glass)',
+    emoji: 'https://r2-pub.rork.com/generated-images/0cc54217-20c0-4c7b-89f2-259fcaff0110.png',
+    units: 3.38,
+    size: '250',
+    percentage: 13.5,
+  },
+  {
+    id: 'default-wine-small',
+    name: 'Wine (small glass)',
+    emoji: 'https://r2-pub.rork.com/generated-images/a0333fe3-977d-4956-b403-0f797ea0e2f9.png',
+    units: 2.36,
+    size: '175',
+    percentage: 13.5,
+  },
+  {
+    id: 'default-beer',
+    name: 'Beer (Pint)',
+    emoji: 'https://r2-pub.rork.com/generated-images/fe044876-cab6-4726-a476-ce85fbec954b.png',
+    units: 2.84,
+    size: '568',
+    percentage: 5,
+  },
+  {
+    id: 'default-spirits',
+    name: 'Spirits',
+    emoji: 'https://r2-pub.rork.com/generated-images/621b4703-f453-4156-9b65-4b6b361d1fa6.png',
+    units: 2,
+    size: '50',
+    percentage: 40,
+  },
+];
 
 export interface DayData {
   day: string;
@@ -157,7 +192,11 @@ export const [DrinkTrackerProvider, useDrinkTracker] = createContextHook(() => {
       const safeCount = Math.max(0, count);
       if (safeCount <= 0) return;
 
-      const template = settings.drinkTemplates.find(t => t.id === drinkId);
+      // Look up template from user templates first, then fall back to defaults
+      let template = settings.drinkTemplates.find(t => t.id === drinkId);
+      if (!template) {
+        template = defaultDrinkTemplates.find(t => t.id === drinkId);
+      }
       const perDrinkUnits = template?.units ?? 0;
 
       drinkCount += safeCount;

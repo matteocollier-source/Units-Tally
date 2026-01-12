@@ -28,32 +28,32 @@ const defaultDrinkTemplates: DrinkTemplate[] = [
     id: 'default-wine',
     name: 'Wine (large glass)',
     emoji: 'https://r2-pub.rork.com/generated-images/0cc54217-20c0-4c7b-89f2-259fcaff0110.png',
-    units: 3,
+    units: 3.38,
     size: '250',
-    percentage: 12,
+    percentage: 13.5,
   },
   {
     id: 'default-wine-small',
     name: 'Wine (small glass)',
     emoji: 'https://r2-pub.rork.com/generated-images/a0333fe3-977d-4956-b403-0f797ea0e2f9.png',
-    units: 2.1,
+    units: 2.36,
     size: '175',
-    percentage: 12,
+    percentage: 13.5,
   },
   {
     id: 'default-beer',
     name: 'Beer (Pint)',
     emoji: 'https://r2-pub.rork.com/generated-images/fe044876-cab6-4726-a476-ce85fbec954b.png',
-    units: 2.3,
+    units: 2.84,
     size: '568',
-    percentage: 4,
+    percentage: 5,
   },
   {
     id: 'default-spirits',
     name: 'Spirits',
     emoji: 'https://r2-pub.rork.com/generated-images/621b4703-f453-4156-9b65-4b6b361d1fa6.png',
-    units: 1,
-    size: '25',
+    units: 2,
+    size: '50',
     percentage: 40,
   },
 ];
@@ -101,9 +101,20 @@ export default function DrinkTrackerScreen() {
     const savedCounts = dayData?.drinkCounts || {};
     const syncedCounts: Record<string, number> = {};
     
-    const allDrinks = settings.drinkTemplates;
+    // Include both user templates and default templates
+    const allDrinks = settings.drinkTemplates.length > 0 
+      ? settings.drinkTemplates 
+      : defaultDrinkTemplates;
+    
     allDrinks.forEach(drink => {
       syncedCounts[drink.id] = savedCounts[drink.id] || 0;
+    });
+    
+    // Also sync default templates if not already included
+    defaultDrinkTemplates.forEach(drink => {
+      if (!(drink.id in syncedCounts)) {
+        syncedCounts[drink.id] = savedCounts[drink.id] || 0;
+      }
     });
     
     // Also include any saved counts that might not be in current templates
@@ -851,15 +862,17 @@ export default function DrinkTrackerScreen() {
                       </TouchableOpacity>
                     </View>
                   </View>
-                  <TouchableOpacity
-                    style={styles.editButtonInline}
-                    onPress={() => {
-                      maybeHaptic(Haptics.ImpactFeedbackStyle.Heavy);
-                      deleteDrinkTemplate(drink.id);
-                    }}
-                  >
-                    <Trash2 size={18} color="#ea4335" />
-                  </TouchableOpacity>
+                  {!drink.id.startsWith('default-') && (
+                    <TouchableOpacity
+                      style={styles.editButtonInline}
+                      onPress={() => {
+                        maybeHaptic(Haptics.ImpactFeedbackStyle.Heavy);
+                        deleteDrinkTemplate(drink.id);
+                      }}
+                    >
+                      <Trash2 size={18} color="#ea4335" />
+                    </TouchableOpacity>
+                  )}
                 </View>
               )})}
             </ScrollView>
