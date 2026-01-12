@@ -504,8 +504,28 @@ export default function DrinkTrackerScreen() {
                             </Text>
                           </View>
 
-                          <Pressable
+                          <Pressable 
                             style={styles.dayCardCenterSection}
+                            onPressIn={() => {
+                              ignoreNextCardPressRef.current = true;
+                            }}
+                            onPress={() => {
+                              console.log('[DayCardStats] pressed', { date: day.date });
+                              handleUnitPress(day.date);
+                              setTimeout(() => {
+                                ignoreNextCardPressRef.current = false;
+                              }, 0);
+                            }}
+                            hitSlop={10}
+                          >
+                            <Text style={styles.dayCardDrinks}>{day.drinkCount}</Text>
+                            <Text style={styles.dayCardDrinksLabel}>drinks</Text>
+                            <Text style={[styles.dayCardUnits, day.units <= 14 && styles.dayCardUnitsGreen]}>{(Math.ceil(day.units * 10) / 10).toFixed(1)}</Text>
+                            <Text style={styles.dayCardUnitsLabel}>units</Text>
+                          </Pressable>
+
+                          <Pressable
+                            style={styles.dayCardRightSection}
                             onPressIn={() => {
                               ignoreNextCardPressRef.current = true;
                             }}
@@ -543,26 +563,6 @@ export default function DrinkTrackerScreen() {
                                 resizeMode="contain"
                               />
                             )}
-                          </Pressable>
-
-                          <Pressable 
-                            style={styles.dayCardRightSection}
-                            onPressIn={() => {
-                              ignoreNextCardPressRef.current = true;
-                            }}
-                            onPress={() => {
-                              console.log('[DayCardStats] pressed', { date: day.date });
-                              handleUnitPress(day.date);
-                              setTimeout(() => {
-                                ignoreNextCardPressRef.current = false;
-                              }, 0);
-                            }}
-                            hitSlop={10}
-                          >
-                            <Text style={styles.dayCardDrinks}>{day.drinkCount}</Text>
-                            <Text style={styles.dayCardDrinksLabel}>drinks</Text>
-                            <Text style={[styles.dayCardUnits, day.units <= 14 && styles.dayCardUnitsGreen]}>{(Math.ceil(day.units * 10) / 10).toFixed(1)}</Text>
-                            <Text style={styles.dayCardUnitsLabel}>units</Text>
                           </Pressable>
                         </View>
                       </Pressable>
@@ -1142,8 +1142,8 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 1,
     borderColor: '#e8e8e8',
-    padding: 8,
-    minHeight: 68,
+    padding: 10,
+    minHeight: 76,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.08,
@@ -1175,12 +1175,13 @@ const styles = StyleSheet.create({
     minWidth: 44,
   },
   dayCardCenterSection: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 8,
   },
   dayCardRightSection: {
-    alignItems: 'flex-end',
+    alignItems: 'center',
     justifyContent: 'center',
     minWidth: 44,
   },
