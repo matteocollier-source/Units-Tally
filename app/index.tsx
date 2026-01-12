@@ -72,7 +72,7 @@ export default function DrinkTrackerScreen() {
   const confettiRef = useRef<any>(null);
   const router = useRouter();
   const shimmerAnim = useRef(new Animated.Value(0)).current;
-  const ignoreNextCardPressRef = useRef<boolean>(false);
+
   const pendingModalDateRef = useRef<string | null>(null);
   
   const weeks = useMemo(() => drinkTracker?.weeks ?? [], [drinkTracker?.weeks]);
@@ -486,10 +486,7 @@ export default function DrinkTrackerScreen() {
                           pressed && styles.dayCardPressed,
                         ]}
                         onPress={() => {
-                          if (ignoreNextCardPressRef.current) {
-                            console.log('[DayCard] ignored card press (toggle/stats interaction)', { date: day.date });
-                            return;
-                          }
+                          console.log('[DayCard] pressed', { date: day.date });
                           handleDayPress(day.date);
                         }}
                       >
@@ -517,15 +514,10 @@ export default function DrinkTrackerScreen() {
 
                           <Pressable 
                             style={styles.dayCardCenterSection}
-                            onPressIn={() => {
-                              ignoreNextCardPressRef.current = true;
-                            }}
-                            onPress={() => {
+                            onPress={(e) => {
+                              e.stopPropagation();
                               console.log('[DayCardStats] pressed', { date: day.date });
                               handleUnitPress(day.date);
-                              setTimeout(() => {
-                                ignoreNextCardPressRef.current = false;
-                              }, 0);
                             }}
                             hitSlop={10}
                           >
@@ -537,15 +529,10 @@ export default function DrinkTrackerScreen() {
 
                           <Pressable
                             style={styles.dayCardRightSection}
-                            onPressIn={() => {
-                              ignoreNextCardPressRef.current = true;
-                            }}
-                            onPress={() => {
+                            onPress={(e) => {
+                              e.stopPropagation();
                               console.log('[DayCardToggle] pressed', { date: day.date, drank: day.drank });
                               handleToggle(day.date);
-                              setTimeout(() => {
-                                ignoreNextCardPressRef.current = false;
-                              }, 0);
                             }}
                             hitSlop={12}
                             testID={`day-card-toggle-${day.date}`}
@@ -626,10 +613,7 @@ export default function DrinkTrackerScreen() {
                             pressed && styles.dayBarPressed,
                           ]}
                           onPress={() => {
-                            if (ignoreNextCardPressRef.current) {
-                              console.log('[DayBar] ignored bar press (toggle/stats interaction)', { date: day.date });
-                              return;
-                            }
+                            console.log('[DayBar] pressed', { date: day.date });
                             handleDayPress(day.date);
                           }}
                         >
@@ -658,15 +642,10 @@ export default function DrinkTrackerScreen() {
 
                           <Pressable
                             style={styles.dayBarCenter}
-                            onPressIn={() => {
-                              ignoreNextCardPressRef.current = true;
-                            }}
-                            onPress={() => {
+                            onPress={(e) => {
+                              e.stopPropagation();
                               console.log('[DayBarStats] pressed', { date: day.date });
                               handleUnitPress(day.date);
-                              setTimeout(() => {
-                                ignoreNextCardPressRef.current = false;
-                              }, 0);
                             }}
                             hitSlop={10}
                           >
@@ -688,15 +667,10 @@ export default function DrinkTrackerScreen() {
 
                           <Pressable
                             style={styles.dayBarToggle}
-                            onPressIn={() => {
-                              ignoreNextCardPressRef.current = true;
-                            }}
-                            onPress={() => {
+                            onPress={(e) => {
+                              e.stopPropagation();
                               console.log('[DayBarToggle] pressed', { date: day.date, drank: day.drank });
                               handleToggle(day.date);
-                              setTimeout(() => {
-                                ignoreNextCardPressRef.current = false;
-                              }, 0);
                             }}
                             hitSlop={12}
                             testID={`day-bar-toggle-${day.date}`}
