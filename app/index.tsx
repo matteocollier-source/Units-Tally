@@ -899,11 +899,6 @@ export default function DrinkTrackerScreen() {
         <View style={styles.welcomeOverlay}>
           <View style={styles.welcomeCard}>
             <View style={styles.welcomeHeader}>
-              <Image 
-                source={{ uri: 'https://pub-e001eb4506b145aa938b5d3badbff6a5.r2.dev/attachments/lv9jlm6ceoe9hbciezwzd' }} 
-                style={styles.welcomeIcon}
-                resizeMode="contain"
-              />
               <Text style={styles.welcomeTitle}>Units Tally</Text>
               <Text style={styles.welcomeSubtitle}>Track your drinking habits</Text>
             </View>
@@ -1846,12 +1841,6 @@ const styles = StyleSheet.create({
     paddingVertical: 28,
     paddingHorizontal: 24,
     alignItems: 'center',
-  },
-  welcomeIcon: {
-    width: 80,
-    height: 80,
-    marginBottom: 12,
-    borderRadius: 12,
   },
   welcomeTitle: {
     fontSize: 26,
