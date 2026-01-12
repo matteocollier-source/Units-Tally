@@ -19,6 +19,8 @@ export interface WeekData {
 
 const STORAGE_KEY = '@drink_tracker_data';
 
+const HISTORY_START_ISO = '2025-06-01';
+
 function toISODate(d: Date): string {
   return d.toISOString().split('T')[0] ?? '';
 }
@@ -44,12 +46,12 @@ function formatWeekLabel(weekStart: Date): string {
   return `${formatDate(weekStart)} - ${formatDate(weekEnd)}`;
 }
 
-function getWeeksData(weekStartsOnSunday: boolean, earliestEntryDate?: string): WeekData[] {
+function getWeeksData(weekStartsOnSunday: boolean): WeekData[] {
   const weeks: WeekData[] = [];
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  const historyStart = earliestEntryDate ? new Date(earliestEntryDate) : today;
+  const historyStart = new Date(HISTORY_START_ISO);
   historyStart.setHours(0, 0, 0, 0);
 
   const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -98,17 +100,6 @@ type DayEntry = {
   drinkCounts: Record<string, number>;
   savedDrinkCounts?: Record<string, number>;
 };
-
-function getEarliestEntryDate(data: Record<string, DayEntry>): string | undefined {
-  const dates = Object.keys(data).filter(date => {
-    const entry = data[date];
-    return entry && (entry.drank || entry.units > 0 || entry.drinkCount > 0 || Object.keys(entry.drinkCounts || {}).length > 0);
-  });
-  
-  if (dates.length === 0) return undefined;
-  
-  return dates.sort()[0];
-}
 
 export const [DrinkTrackerProvider, useDrinkTracker] = createContextHook(() => {
   const { settings } = useSettings();
@@ -295,8 +286,7 @@ export const [DrinkTrackerProvider, useDrinkTracker] = createContextHook(() => {
   };
 
   const getWeeksWithData = (): WeekData[] => {
-    const earliestDate = getEarliestEntryDate(data);
-    const weeks = getWeeksData(settings.weekStartsOnSunday, earliestDate);
+    const weeks = getWeeksData(settings.weekStartsOnSunday);
     return weeks.map(week => ({
       ...week,
       days: week.days.map(day => {
@@ -318,15 +308,10 @@ export const [DrinkTrackerProvider, useDrinkTracker] = createContextHook(() => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    const earliestDate = getEarliestEntryDate(data);
-    if (!earliestDate) {
-      return { avgUnitsPerWeek: 0, avgDrinkingDaysPerWeek: 0 };
-    }
-
-    const historyStart = new Date(earliestDate);
+    const historyStart = new Date(HISTORY_START_ISO);
     historyStart.setHours(0, 0, 0, 0);
 
-    const daysTotal = Math.max(1, Math.floor((today.getTime() - historyStart.getTime()) / (1000 * 60 * 60 * 24)) + 1);
+    const daysTotal = Math.max(0, Math.floor((today.getTime() - historyStart.getTime()) / (1000 * 60 * 60 * 24)) + 1);
     const weeksTotal = Math.max(1, daysTotal / 7);
 
     let totalUnits = 0;
