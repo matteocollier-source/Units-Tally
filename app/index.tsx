@@ -482,8 +482,8 @@ export default function DrinkTrackerScreen() {
                           handleDayPress(day.date);
                         }}
                       >
-                        <View style={styles.dayCardHeader}>
-                          <View style={styles.dayCardDateContainer}>
+                        <View style={styles.dayCardContent}>
+                          <View style={styles.dayCardLeftSection}>
                             <Text style={styles.dayCardDay}>
                               {(() => {
                                 const weekday = new Date(day.date).toLocaleDateString('en-GB', { weekday: 'long' });
@@ -503,18 +503,15 @@ export default function DrinkTrackerScreen() {
                               {new Date(day.date).getDate()}/{new Date(day.date).getMonth() + 1}
                             </Text>
                           </View>
+
                           <Pressable
-                            style={styles.dayCardToggle}
+                            style={styles.dayCardCenterSection}
                             onPressIn={() => {
                               ignoreNextCardPressRef.current = true;
                             }}
                             onPress={() => {
                               console.log('[DayCardToggle] pressed', { date: day.date, drank: day.drank });
-                              if (day.drank) {
-                                handleToggle(day.date);
-                              } else {
-                                handleToggle(day.date);
-                              }
+                              handleToggle(day.date);
                               setTimeout(() => {
                                 ignoreNextCardPressRef.current = false;
                               }, 0);
@@ -547,25 +544,27 @@ export default function DrinkTrackerScreen() {
                               />
                             )}
                           </Pressable>
-                        </View>
 
-                        <Pressable 
-                          style={styles.dayCardStats}
-                          onPressIn={() => {
-                            ignoreNextCardPressRef.current = true;
-                          }}
-                          onPress={() => {
-                            console.log('[DayCardStats] pressed', { date: day.date });
-                            handleUnitPress(day.date);
-                            setTimeout(() => {
-                              ignoreNextCardPressRef.current = false;
-                            }, 0);
-                          }}
-                          hitSlop={10}
-                        >
-                          <Text style={styles.dayCardDrinks}>{day.drinkCount} Drinks</Text>
-                          <Text style={[styles.dayCardUnits, day.units <= 14 && styles.dayCardUnitsGreen]}>{(Math.ceil(day.units * 10) / 10).toFixed(1)} Units</Text>
-                        </Pressable>
+                          <Pressable 
+                            style={styles.dayCardRightSection}
+                            onPressIn={() => {
+                              ignoreNextCardPressRef.current = true;
+                            }}
+                            onPress={() => {
+                              console.log('[DayCardStats] pressed', { date: day.date });
+                              handleUnitPress(day.date);
+                              setTimeout(() => {
+                                ignoreNextCardPressRef.current = false;
+                              }, 0);
+                            }}
+                            hitSlop={10}
+                          >
+                            <Text style={styles.dayCardDrinks}>{day.drinkCount}</Text>
+                            <Text style={styles.dayCardDrinksLabel}>drinks</Text>
+                            <Text style={[styles.dayCardUnits, day.units <= 14 && styles.dayCardUnitsGreen]}>{(Math.ceil(day.units * 10) / 10).toFixed(1)}</Text>
+                            <Text style={styles.dayCardUnitsLabel}>units</Text>
+                          </Pressable>
+                        </View>
                       </Pressable>
                     </View>
                     );
@@ -1143,8 +1142,8 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 1,
     borderColor: '#e8e8e8',
-    padding: 10,
-    minHeight: 78,
+    padding: 8,
+    minHeight: 68,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.08,
@@ -1164,15 +1163,26 @@ const styles = StyleSheet.create({
   dayCardPressed: {
     opacity: 0.7,
   },
-  dayCardHeader: {
+  dayCardContent: {
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    marginBottom: 8,
+    flex: 1,
   },
-  dayCardDateContainer: {
-    gap: 0,
-    paddingTop: 14,
+  dayCardLeftSection: {
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    minWidth: 44,
+  },
+  dayCardCenterSection: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 8,
+  },
+  dayCardRightSection: {
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    minWidth: 44,
   },
   dayCardTodayLabel: {
     fontSize: 11,
@@ -1187,45 +1197,50 @@ const styles = StyleSheet.create({
     right: 0,
   },
   dayCardDay: {
-    fontSize: 11,
+    fontSize: 12,
     fontWeight: '800' as const,
     color: '#202124',
     fontFamily: 'monospace',
-    lineHeight: 12,
-  },
-  dayCardToggle: {
-    width: 52,
-    height: 48,
-    alignItems: 'center',
-    justifyContent: 'center',
+    lineHeight: 14,
   },
   dayCardDate: {
-    fontSize: 9,
-    fontWeight: '700' as const,
+    fontSize: 10,
+    fontWeight: '600' as const,
     color: '#5f6368',
     fontFamily: 'monospace',
-    marginTop: 1,
-    letterSpacing: 0,
-    lineHeight: 10,
-  },
-  dayCardStats: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    marginTop: 4,
+    marginTop: 2,
+    lineHeight: 12,
   },
   dayCardDrinks: {
-    fontSize: 11,
-    fontWeight: '600' as const,
+    fontSize: 15,
+    fontWeight: '700' as const,
     color: '#4a90e2',
     fontFamily: 'monospace',
-    marginBottom: 3,
+    lineHeight: 17,
+  },
+  dayCardDrinksLabel: {
+    fontSize: 8,
+    fontWeight: '600' as const,
+    color: '#8a9099',
+    fontFamily: 'monospace',
+    textTransform: 'uppercase' as const,
+    letterSpacing: 0.3,
+    marginBottom: 4,
   },
   dayCardUnits: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '700' as const,
     color: '#6ba5a7',
     fontFamily: 'monospace',
+    lineHeight: 17,
+  },
+  dayCardUnitsLabel: {
+    fontSize: 8,
+    fontWeight: '600' as const,
+    color: '#8a9099',
+    fontFamily: 'monospace',
+    textTransform: 'uppercase' as const,
+    letterSpacing: 0.3,
   },
   dayCardUnitsGreen: {
     color: '#6ba5a7',
@@ -1974,12 +1989,12 @@ const styles = StyleSheet.create({
     letterSpacing: 0.3,
   },
   customStarImage: {
-    width: 38,
-    height: 38,
+    width: 36,
+    height: 36,
   },
   dayCardDrinkIcon: {
-    width: 34,
-    height: 34,
+    width: 32,
+    height: 32,
   },
   dayCardDrinkEmoji: {
     fontSize: 30,
