@@ -66,7 +66,7 @@ export default function DrinkTrackerScreen() {
   
   const [selectedDate, setSelectedDate] = useState<string>('');
   const [confettiOrigin, setConfettiOrigin] = useState({ x: 0, y: 0 });
-  const [showFirstTimeGuide, setShowFirstTimeGuide] = useState(false);
+  const [showFirstTimeGuide, setShowFirstTimeGuide] = useState<boolean | null>(null);
   const [drinkTapCounts, setDrinkTapCounts] = useState<Record<string, number>>({});
   const scrollViewRef = useRef<ScrollView>(null);
   const confettiRef = useRef<any>(null);
@@ -128,8 +128,10 @@ export default function DrinkTrackerScreen() {
   }, [data, settings.drinkTemplates]);
 
   useEffect(() => {
-    setShowFirstTimeGuide(true);
-  }, []);
+    if (settings.hasSeenIntro !== undefined) {
+      setShowFirstTimeGuide(!settings.hasSeenIntro);
+    }
+  }, [settings.hasSeenIntro]);
 
   useFocusEffect(
     useCallback(() => {
@@ -829,7 +831,7 @@ export default function DrinkTrackerScreen() {
       <Modal
         animationType="fade"
         transparent={true}
-        visible={showFirstTimeGuide}
+        visible={showFirstTimeGuide === true}
         onRequestClose={() => setShowFirstTimeGuide(false)}
         statusBarTranslucent={Platform.OS === 'android'}
       >
