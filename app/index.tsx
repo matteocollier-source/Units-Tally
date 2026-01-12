@@ -1148,7 +1148,9 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   dayCardWeekend: {
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#fff8f0',
+    borderLeftWidth: 3,
+    borderLeftColor: '#e89b5a',
   },
   dayCardToday: {
     borderWidth: 2,
@@ -1265,7 +1267,9 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   dayBarWeekend: {
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#fff8f0',
+    borderLeftWidth: 3,
+    borderLeftColor: '#e89b5a',
   },
   dayBarToday: {
     borderWidth: 1.5,
