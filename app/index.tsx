@@ -81,6 +81,7 @@ export default function DrinkTrackerScreen() {
   const addUnits = drinkTracker?.addUnits ?? (() => {});
   const isLoading = drinkTracker?.isLoading ?? true;
   const data = useMemo(() => drinkTracker?.data ?? {}, [drinkTracker?.data]);
+  const earliestEntryDate = drinkTracker?.earliestEntryDate ?? null;
   
   const settings = settingsContext?.settings ?? { drinkTemplates: [], indicatorType: 'emoji' as const, hapticsEnabled: true };
   const addDrinkTemplate = settingsContext?.addDrinkTemplate ?? (() => undefined);
@@ -305,7 +306,10 @@ export default function DrinkTrackerScreen() {
   };
 
   const getAverageDrinkFreeDays = () => {
-    const historyStart = new Date('2025-06-01');
+    // If no entries exist, return 0
+    if (!earliestEntryDate) return 0;
+
+    const historyStart = new Date(earliestEntryDate);
     historyStart.setHours(0, 0, 0, 0);
 
     const today = new Date();
