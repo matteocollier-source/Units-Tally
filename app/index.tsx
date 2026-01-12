@@ -1148,14 +1148,14 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   dayCardWeekend: {
-    backgroundColor: '#f5f7fa',
+    backgroundColor: '#e8ecf1',
     borderLeftWidth: 3,
-    borderLeftColor: '#b8c4d0',
+    borderLeftColor: '#8fa3b8',
   },
   dayCardToday: {
     borderWidth: 3,
-    borderColor: '#3b82f6',
-    backgroundColor: '#e3f2fd',
+    borderColor: '#4a7ba7',
+    backgroundColor: '#d4e3f3',
   },
   dayCardPressed: {
     opacity: 0.7,
@@ -1267,14 +1267,14 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   dayBarWeekend: {
-    backgroundColor: '#f5f7fa',
+    backgroundColor: '#e8ecf1',
     borderLeftWidth: 3,
-    borderLeftColor: '#b8c4d0',
+    borderLeftColor: '#8fa3b8',
   },
   dayBarToday: {
     borderWidth: 2.5,
-    borderColor: '#3b82f6',
-    backgroundColor: '#e3f2fd',
+    borderColor: '#4a7ba7',
+    backgroundColor: '#d4e3f3',
   },
   dayBarPressed: {
     opacity: 0.7,
