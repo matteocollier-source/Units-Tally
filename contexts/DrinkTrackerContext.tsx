@@ -76,8 +76,12 @@ function getWeeksData(weekStartsOnSunday: boolean, earliestEntryDate: string | n
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  // If no entries exist, just show current week
-  const historyStart = earliestEntryDate ? new Date(earliestEntryDate) : today;
+  // If no entries exist, show from start of current week
+  // This ensures at least the current week is always visible
+  const currentWeekStart = startOfWeek(today, weekStartsOnSunday);
+  const historyStart = earliestEntryDate 
+    ? new Date(Math.min(new Date(earliestEntryDate).getTime(), currentWeekStart.getTime()))
+    : currentWeekStart;
   historyStart.setHours(0, 0, 0, 0);
 
   const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];

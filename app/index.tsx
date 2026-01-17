@@ -75,7 +75,7 @@ export default function DrinkTrackerScreen() {
   const data = useMemo(() => drinkTracker?.data ?? {}, [drinkTracker?.data]);
   const earliestEntryDate = drinkTracker?.earliestEntryDate ?? null;
   
-  const settings = settingsContext?.settings ?? { drinkTemplates: [], indicatorType: 'emoji' as const, hapticsEnabled: true };
+  const settings = settingsContext?.settings ?? { drinkTemplates: defaultDrinkTemplates, indicatorType: 'emoji' as const, hapticsEnabled: true, layoutType: 'vertical' as const };
   const addDrinkTemplate = settingsContext?.addDrinkTemplate ?? (() => undefined);
   const deleteDrinkTemplate = settingsContext?.deleteDrinkTemplate ?? (() => {});
   const markIntroSeen = settingsContext?.markIntroSeen ?? (() => {});
