@@ -80,7 +80,11 @@ export default function DrinkTrackerScreen() {
   const deleteDrinkTemplate = settingsContext?.deleteDrinkTemplate ?? (() => {});
   const markIntroSeen = settingsContext?.markIntroSeen ?? (() => {});
 
-  const displayDrinks = settings.drinkTemplates.length > 0 ? settings.drinkTemplates : defaultDrinkTemplates;
+  const displayDrinks = (settings.drinkTemplates && settings.drinkTemplates.length > 0) 
+    ? settings.drinkTemplates 
+    : defaultDrinkTemplates;
+  
+  console.log('[Home] displayDrinks count:', displayDrinks.length, 'names:', displayDrinks.map(d => d.name).join(', '));
 
   const maybeHaptic = useCallback((style: Haptics.ImpactFeedbackStyle) => {
     if (!settings.hapticsEnabled) return;

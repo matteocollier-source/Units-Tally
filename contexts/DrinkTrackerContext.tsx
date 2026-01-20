@@ -76,13 +76,21 @@ function getWeeksData(weekStartsOnSunday: boolean, earliestEntryDate: string | n
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  // If no entries exist, show from start of current week
-  // This ensures at least the current week is always visible
-  const currentWeekStart = startOfWeek(today, weekStartsOnSunday);
-  const historyStart = earliestEntryDate 
-    ? new Date(Math.min(new Date(earliestEntryDate).getTime(), currentWeekStart.getTime()))
-    : currentWeekStart;
-  historyStart.setHours(0, 0, 0, 0);
+  // Always show weeks going back to December 1, 2025
+  const fixedStartDate = new Date('2025-12-01');
+  fixedStartDate.setHours(0, 0, 0, 0);
+  
+  // Use the earliest of: fixed start date, earliest entry date, or current week
+  let historyStart = fixedStartDate;
+  if (earliestEntryDate) {
+    const entryDate = new Date(earliestEntryDate);
+    entryDate.setHours(0, 0, 0, 0);
+    if (entryDate < historyStart) {
+      historyStart = entryDate;
+    }
+  }
+  // Ensure we at least show from fixed start date
+  historyStart = new Date(Math.min(historyStart.getTime(), fixedStartDate.getTime()));
 
   const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
