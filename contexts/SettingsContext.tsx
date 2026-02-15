@@ -41,7 +41,7 @@ const defaultDrinkTemplates: DrinkTemplate[] = [
   {
     id: 'default-wine-small',
     name: 'Wine (small glass)',
-    emoji: 'https://r2-pub.rork.com/generated-images/a0333fe3-977d-4956-b403-0f797ea0e2f9.png',
+    emoji: 'https://r2-pub.rork.com/generated-images/eb4ea35d-0c93-48f2-9150-24a2ec99406d.png',
     units: 2.36,
     size: '175',
     percentage: 13.5,
