@@ -752,7 +752,7 @@ export default function DrinkTrackerScreen() {
             <ScrollView
               style={styles.drinkList}
               contentContainerStyle={styles.drinkListContent}
-              showsVerticalScrollIndicator={true}
+              showsVerticalScrollIndicator={false}
             >
               {displayDrinks.map((drink) => {
                 const hasCount = (drinkTapCounts[drink.id] || 0) > 0;
@@ -1655,8 +1655,8 @@ const styles = StyleSheet.create({
     marginLeft: 4,
   },
   drinkEmojiImage: {
-    width: 48,
-    height: 48,
+    width: 52,
+    height: 52,
     marginRight: 12,
   },
   calculatedUnitsContainer: {

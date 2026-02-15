@@ -21,6 +21,10 @@ function RootLayoutNav() {
           headerShown: true,
           title: "Drinks & Units Tally",
           headerLargeTitle: false,
+          headerTitleStyle: {
+            fontSize: 17,
+            fontWeight: '600',
+          },
         }} 
       />
       <Stack.Screen 
