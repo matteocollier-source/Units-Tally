@@ -23,6 +23,7 @@ import {
   Sparkles,
   Layout,
   Grid3X3,
+  Shield,
 } from 'lucide-react-native';
 import { Stack } from 'expo-router';
 
@@ -257,6 +258,27 @@ export default function SettingsScreen() {
               <Text style={styles.badgeText}>£1.00</Text>
             </View>
           </TouchableOpacity>
+        </View>
+
+        {/* PRIVACY POLICY */}
+        <View style={styles.sectionHeaderContainer}>
+          <Shield size={14} color="#666" />
+          <Text style={styles.sectionHeader}>Legal</Text>
+        </View>
+
+        <View style={styles.sectionContainer}>
+          <View style={styles.privacyContent}>
+            <Text style={styles.privacyTitle}>Privacy Policy</Text>
+            <Text style={styles.privacyText}>
+              Units Tally does not collect, store, or share any personal data.
+            </Text>
+            <Text style={styles.privacyText}>
+              The app does not require an account and does not access contacts, location, camera, microphone, or device identifiers.
+            </Text>
+            <Text style={styles.privacyText}>
+              All data you enter remains stored locally on your device and is not transmitted off the device.
+            </Text>
+          </View>
         </View>
 
         <View style={styles.footer}>
@@ -904,5 +926,20 @@ const styles = StyleSheet.create({
   },
   layoutIconActive: {
     borderColor: '#fff',
+  },
+  privacyContent: {
+    padding: 16,
+  },
+  privacyTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#fff',
+    marginBottom: 12,
+  },
+  privacyText: {
+    fontSize: 13,
+    color: '#888',
+    lineHeight: 20,
+    marginBottom: 10,
   },
 });
