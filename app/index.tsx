@@ -790,19 +790,17 @@ export default function DrinkTrackerScreen() {
                       >
                         <Plus size={18} color="#fff" strokeWidth={3} />
                       </TouchableOpacity>
+                      <TouchableOpacity
+                        style={styles.deleteXButton}
+                        onPress={() => {
+                          maybeHaptic(Haptics.ImpactFeedbackStyle.Heavy);
+                          deleteDrinkTemplate(drink.id);
+                        }}
+                      >
+                        <X size={18} color="#d32f2f" strokeWidth={3} />
+                      </TouchableOpacity>
                     </View>
                   </View>
-                  {!drink.id.startsWith('default-') && (
-                    <TouchableOpacity
-                      style={styles.editButtonInline}
-                      onPress={() => {
-                        maybeHaptic(Haptics.ImpactFeedbackStyle.Heavy);
-                        deleteDrinkTemplate(drink.id);
-                      }}
-                    >
-                      <Trash2 size={18} color="#ea4335" />
-                    </TouchableOpacity>
-                  )}
                 </View>
               )})}
             </ScrollView>
@@ -1983,6 +1981,15 @@ const styles = StyleSheet.create({
   quantityDisplay: {
     minWidth: 28,
     alignItems: 'center',
+  },
+  deleteXButton: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: '#ffebee',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 4,
   },
   quantityText: {
     fontSize: 16,
