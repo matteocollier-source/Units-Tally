@@ -41,6 +41,7 @@ export default function SettingsScreen() {
   
   const [showInstructions, setShowInstructions] = useState(false);
   const [showDonateModal, setShowDonateModal] = useState(false);
+  const [showPrivacyModal, setShowPrivacyModal] = useState(false);
   const [donationAmount, setDonationAmount] = useState('1');
 
   const handleDonate = () => {
@@ -261,25 +262,17 @@ export default function SettingsScreen() {
         </View>
 
         {/* PRIVACY POLICY */}
-        <View style={styles.sectionHeaderContainer}>
-          <Shield size={14} color="#666" />
-          <Text style={styles.sectionHeader}>Legal</Text>
-        </View>
-
-        <View style={styles.sectionContainer}>
-          <View style={styles.privacyContent}>
-            <Text style={styles.privacyTitle}>Privacy Policy</Text>
-            <Text style={styles.privacyText}>
-              Units Tally does not collect, store, or share any personal data.
-            </Text>
-            <Text style={styles.privacyText}>
-              The app does not require an account and does not access contacts, location, camera, microphone, or device identifiers.
-            </Text>
-            <Text style={styles.privacyText}>
-              All data you enter remains stored locally on your device and is not transmitted off the device.
-            </Text>
+        <TouchableOpacity 
+          style={styles.privacyButton}
+          onPress={() => setShowPrivacyModal(true)}
+          activeOpacity={0.7}
+        >
+          <View style={styles.privacyButtonContent}>
+            <Shield size={18} color="#666" />
+            <Text style={styles.privacyButtonText}>Privacy Policy</Text>
           </View>
-        </View>
+          <ChevronRight size={18} color="#444" />
+        </TouchableOpacity>
 
         <View style={styles.footer}>
           <View style={styles.footerLine} />
@@ -386,6 +379,39 @@ export default function SettingsScreen() {
                 Your data stays private on your device
               </Text>
             </View>
+          </Pressable>
+        </Pressable>
+      </Modal>
+
+      {/* PRIVACY POLICY MODAL */}
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={showPrivacyModal}
+        onRequestClose={() => setShowPrivacyModal(false)}
+      >
+        <Pressable style={styles.modalOverlay} onPress={() => setShowPrivacyModal(false)}>
+          <Pressable style={styles.privacyModalContent} onPress={(e) => e.stopPropagation()}>
+            <View style={styles.privacyModalHeader}>
+              <Shield size={24} color="#666" />
+              <Text style={styles.privacyModalTitle}>Privacy Policy</Text>
+            </View>
+            <Text style={styles.privacyModalText}>
+              Units Tally does not collect, store, or share any personal data.
+            </Text>
+            <Text style={styles.privacyModalText}>
+              The app does not require an account and does not access contacts, location, camera, microphone, or device identifiers.
+            </Text>
+            <Text style={styles.privacyModalText}>
+              All data you enter remains stored locally on your device and is not transmitted off the device.
+            </Text>
+            <TouchableOpacity
+              style={styles.privacyCloseButton}
+              onPress={() => setShowPrivacyModal(false)}
+              activeOpacity={0.85}
+            >
+              <Text style={styles.privacyCloseText}>Close</Text>
+            </TouchableOpacity>
           </Pressable>
         </Pressable>
       </Modal>
@@ -927,19 +953,65 @@ const styles = StyleSheet.create({
   layoutIconActive: {
     borderColor: '#fff',
   },
-  privacyContent: {
+  privacyButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#141414',
+    borderRadius: 16,
     padding: 16,
+    marginTop: 24,
+    borderWidth: 1,
+    borderColor: '#222',
   },
-  privacyTitle: {
-    fontSize: 16,
+  privacyButtonContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  privacyButtonText: {
+    fontSize: 15,
     fontWeight: '600',
+    color: '#888',
+  },
+  privacyModalContent: {
+    backgroundColor: '#141414',
+    borderRadius: 20,
+    padding: 24,
+    maxWidth: 400,
+    width: '100%',
+    borderWidth: 1,
+    borderColor: '#2a2a2a',
+  },
+  privacyModalHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    marginBottom: 20,
+  },
+  privacyModalTitle: {
+    fontSize: 20,
+    fontWeight: '700',
     color: '#fff',
+  },
+  privacyModalText: {
+    fontSize: 14,
+    color: '#888',
+    lineHeight: 22,
     marginBottom: 12,
   },
-  privacyText: {
-    fontSize: 13,
-    color: '#888',
-    lineHeight: 20,
-    marginBottom: 10,
+  privacyCloseButton: {
+    backgroundColor: '#1a1a1a',
+    borderRadius: 12,
+    paddingVertical: 14,
+    alignItems: 'center',
+    marginTop: 12,
+    borderWidth: 1,
+    borderColor: '#333',
+  },
+  privacyCloseText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
   },
 });
